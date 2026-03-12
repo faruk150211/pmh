@@ -42,8 +42,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::delete('/branding/delete-favicon', [BrandingController::class, 'deleteFavicon'])->name('branding.delete-favicon');
     Route::post('/branding/update-identity', [BrandingController::class, 'updateIdentity'])->name('branding.update-identity');
 
-    // Symlink creation route
-    Route::post('/storage-link', function () {
+    // Symlink creation route - accepts GET and POST
+    Route::match(['get', 'post'], '/storage-link', function () {
         try {
             $target = storage_path('app/public');
             $link = public_path('storage');
