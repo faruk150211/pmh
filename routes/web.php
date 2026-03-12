@@ -41,6 +41,26 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::delete('/branding/delete-logo', [BrandingController::class, 'deleteLogo'])->name('branding.delete-logo');
     Route::delete('/branding/delete-favicon', [BrandingController::class, 'deleteFavicon'])->name('branding.delete-favicon');
     Route::post('/branding/update-identity', [BrandingController::class, 'updateIdentity'])->name('branding.update-identity');
+
+    // Symlink creation route
+    Route::post('/storage-link', function () {
+        try {
+            $target = storage_path('app/public');
+            $link = public_path('storage');
+
+            // Check if link already exists
+            if (file_exists($link) && is_link($link)) {
+                return response()->json(['message' => 'Symlink already exists'], 200);
+            }
+
+            // Create symlink
+            symlink($target, $link);
+
+            return response()->json(['message' => 'Storage symlink created successfully'], 201);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    })->name('storage-link');
 });
 
 Route::middleware('auth')->group(function () {

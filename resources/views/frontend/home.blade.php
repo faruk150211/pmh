@@ -89,6 +89,13 @@
         .hero.section {
             margin-top: 0 !important;
         }
+
+        /* Justify hero title and description text */
+        
+
+        .hero-description {
+            text-align: justify;
+        }
     </style>
 
     <!-- Hero Section -->

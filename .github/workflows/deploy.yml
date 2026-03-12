@@ -1,0 +1,53 @@
+name: Deploy Laravel to cPanel via FTP
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  ftp-deploy:
+    name: Deploy via FTP
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Create dummy .env so artisan doesn't try to connect to production DB
+      # - name: Create dummy .env
+      #   run: |
+      #     cp .env.example .env
+      #     echo "APP_KEY=base64:dummykey1234567890dummykey1234567890dummykey1234=" >> .env
+      #     echo "DB_CONNECTION=mysql" >> .env
+      #     echo "DB_HOST=127.0.0.1" >> .env
+      #     echo "DB_PORT=3306" >> .env
+      #     echo "DB_DATABASE=dummy" >> .env
+      #     echo "DB_USERNAME=root" >> .env
+      #     echo "DB_PASSWORD=" >> .env
+
+      # - name: Install Composer Dependencies
+      #   run: composer install --no-dev --no-scripts
+
+      # Deploy files via FTP
+      - name: Upload to cPanel via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: ${{ secrets.FTP_PORT }}
+          protocol: ftp
+          local-dir: ./
+          server-dir: ${{ secrets.FTP_REMOTE_DIR }}
+          exclude: |
+            **/.git*
+            **/.github/**
+            **/node_modules/**
+            **/tests/**
+            **/storage/**
+            **/vendor/**
+            .env
+
+      - name: Deployment complete
+        run: echo "✓ Files deployed successfully via FTP to shared hosting"
