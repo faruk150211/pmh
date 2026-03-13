@@ -91,7 +91,7 @@
         }
 
         /* Justify hero title and description text */
-        
+
 
         .hero-description {
             text-align: justify;
@@ -220,8 +220,8 @@
 
         <div class="section-title" data-aos="fade-up">
           <span class="section-badge">The Challenge</span>
-          <h2>Why Traditional Healthcare Falls Short</h2>
-          <p>Healthcare on your terms - not the hospital's</p>
+          <h2>Healthcare Should Not Feel Exhausting</h2>
+          <p>Many families experience difficulty accessing medical care:</p>
         </div>
 
         <div class="row g-4">
@@ -233,7 +233,7 @@
               </div>
               <h4>Long Wait Times</h4>
               <p>Emergency rooms and clinics mean hours of waiting. Your time is valuable, and illness shouldn't mean wasting your day in a waiting room.</p>
-              <div class="problem-stat"><span class="stat-number">3-5</span> <span class="stat-label">Hours Average Wait</span></div>
+              {{-- <div class="problem-stat"><span class="stat-number">3-5</span> <span class="stat-label">Hours Average Wait</span></div> --}}
             </div>
           </div>
 
@@ -244,7 +244,7 @@
               </div>
               <h4>Inconvenient Locations</h4>
               <p>Traveling to clinics, sometimes far from home, when you're sick or injured. Transportation becomes a challenge when you're not feeling well.</p>
-              <div class="problem-stat"><span class="stat-number">30+ min</span> <span class="stat-label">Average Travel Time</span></div>
+              {{-- <div class="problem-stat"><span class="stat-number">30+ min</span> <span class="stat-label">Average Travel Time</span></div> --}}
             </div>
           </div>
 
@@ -255,7 +255,7 @@
               </div>
               <h4>Hospital-Acquired Infections</h4>
               <p>Exposure to infections and disease in clinical settings. Treatment venues expose you to additional health risks you didn't have before.</p>
-              <div class="problem-stat"><span class="stat-number">1 in 31</span> <span class="stat-label">Hospital Patients Infected</span></div>
+              {{-- <div class="problem-stat"><span class="stat-number">1 in 31</span> <span class="stat-label">Hospital Patients Infected</span></div> --}}
             </div>
           </div>
 
@@ -264,9 +264,9 @@
               <div class="problem-icon">
                 <i class="bi bi-cash-coin"></i>
               </div>
-              <h4>High Treatment Costs</h4>
+              <h4>Difficulty Transporting Elderly Patients</h4>
               <p>Hospital visits mean inflated costs and facility charges. Home-based care can reduce expenses while maintaining quality care.</p>
-              <div class="problem-stat"><span class="stat-number">60%</span> <span class="stat-label">Higher Facility Costs</span></div>
+              {{-- <div class="problem-stat"><span class="stat-number">60%</span> <span class="stat-label">Higher Facility Costs</span></div> --}}
             </div>
           </div>
 
@@ -373,64 +373,77 @@
 
       <div class="container" data-aos="fade-up" data-aos-delay="100">
 
-        <div class="section-title" data-aos="fade-up">
+        <div class="section-title text-center" data-aos="fade-up">
           <span class="section-badge">The Answer</span>
-          <h2>Your Healthcare, Your Way</h2>
-          <p>Premier Medical Housecall brings expert care directly to you</p>
+          <h2>A Better Way to Receive Care</h2>
+          <p>PMH provides physician-led medical care in the comfort of your home</p>
         </div>
 
-        <div class="row align-items-center g-5">
+        <div class="row g-4">
 
-          <div class="col-lg-6" data-aos="fade-right" data-aos-delay="200">
-            <div class="solution-content">
-
-              <div class="solution-item" data-aos="fade-up" data-aos-delay="300">
-                <div class="solution-number">1</div>
-                <div class="solution-text">
-                  <h5>Same-Day Appointments</h5>
-                  <p>No waiting rooms. No scheduling nightmares. Get care within hours of your request, not weeks.</p>
-                </div>
+          <!-- Solution 1: Same-Day Appointments -->
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+            <div class="solution-card">
+              <div class="solution-icon">
+                <i class="bi bi-calendar2-check"></i>
               </div>
-
-              <div class="solution-item" data-aos="fade-up" data-aos-delay="400">
-                <div class="solution-number">2</div>
-                <div class="solution-text">
-                  <h5>Care in Your Home</h5>
-                  <p>Comfortable, private consultation in your own space. Reduce stress and recovery time with familiar surroundings.</p>
-                </div>
-              </div>
-
-              <div class="solution-item" data-aos="fade-up" data-aos-delay="500">
-                <div class="solution-number">3</div>
-                <div class="solution-text">
-                  <h5>Infection-Free Environment</h5>
-                  <p>Sterile medical protocols in your home without exposure to hospital pathogens. Safe treatment for your entire family.</p>
-                </div>
-              </div>
-
-              <div class="solution-item" data-aos="fade-up" data-aos-delay="600">
-                <div class="solution-number">4</div>
-                <div class="solution-text">
-                  <h5>Affordable Excellence</h5>
-                  <p>Direct cost savings through eliminated facility fees. Quality care doesn't require a premium price tag.</p>
-                </div>
-              </div>
-
+              <h4>Same-Day Appointments</h4>
+              <p>No waiting rooms. No scheduling nightmares. Get care within hours of your request, not weeks.</p>
             </div>
           </div>
 
-          <div class="col-lg-6" data-aos="fade-left" data-aos-delay="300">
-            <div class="solution-visual">
-              <img src="{{ asset('frontend/assets/img/health/consultation-4.webp') }}" alt="In-home medical care" class="img-fluid rounded-lg shadow-lg">
-              <div class="floating-badge">
-                <div class="badge-icon">
-                  <i class="bi bi-check-circle-fill"></i>
-                </div>
-                <div class="badge-text">
-                  <strong>150K+</strong>
-                  <small>Patients Cared For</small>
-                </div>
+          <!-- Solution 2: Care in Your Home -->
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+            <div class="solution-card">
+              <div class="solution-icon">
+                <i class="bi bi-house-heart"></i>
               </div>
+              <h4>Care in Your Home</h4>
+              <p>Comfortable, private consultation in your own space. Reduce stress and recovery time with familiar surroundings.</p>
+            </div>
+          </div>
+
+          <!-- Solution 3: Infection-Free Environment -->
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
+            <div class="solution-card">
+              <div class="solution-icon">
+                <i class="bi bi-shield-check"></i>
+              </div>
+              <h4>Infection-Free Environment</h4>
+              <p>Sterile medical protocols in your home without exposure to hospital pathogens. Safe treatment for your entire family.</p>
+            </div>
+          </div>
+
+          <!-- Solution 4: ECG and Monitoring -->
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="500">
+            <div class="solution-card">
+              <div class="solution-icon">
+                <i class="bi bi-activity"></i>
+              </div>
+              <h4>ECG and Monitoring</h4>
+              <p>Real-time cardiac monitoring and ECG testing performed at home with advanced portable equipment.</p>
+            </div>
+          </div>
+
+          <!-- Solution 5: Point-of-Care Diagnostics -->
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="600">
+            <div class="solution-card">
+              <div class="solution-icon">
+                <i class="bi bi-microscope"></i>
+              </div>
+              <h4>Point-of-Care Diagnostics</h4>
+              <p>Instant laboratory testing and diagnostic results without the need for clinic visits or lab delays.</p>
+            </div>
+          </div>
+
+          <!-- Solution 6: Electronic Medical Record Documentation -->
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="700">
+            <div class="solution-card">
+              <div class="solution-icon">
+                <i class="bi bi-file-earmark-medical"></i>
+              </div>
+              <h4>Electronic Medical Records</h4>
+              <p>Comprehensive digital documentation and secure medical records accessible anytime from your account.</p>
             </div>
           </div>
 
@@ -439,7 +452,7 @@
       </div>
 
       <style>
-        .solution .section-badge {
+        #solution .section-badge {
           display: inline-block;
           background: linear-gradient(135deg, #00cc88 0%, #00aa66 100%);
           color: white;
@@ -452,530 +465,116 @@
           margin-bottom: 1rem;
         }
 
-        .solution .section-title h2 {
+        #solution .section-title h2 {
           font-size: 2.5rem;
           font-weight: 700;
-          margin-bottom: 1rem;
+          margin-bottom: 0.5rem;
           color: #1a1a1a;
         }
 
-        .solution-item {
-          display: flex;
-          gap: 1.5rem;
-          margin-bottom: 2rem;
-          padding: 1.5rem;
-          background: #f8f9fa;
+        #solution .section-title p {
+          font-size: 1.1rem;
+          color: #666;
+          margin-bottom: 3rem;
+        }
+
+        .solution-card {
+          background: white;
+          padding: 2rem;
           border-radius: 12px;
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+          transition: all 0.3s ease;
+          text-align: center;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          border-top: 4px solid #00cc88;
+          position: relative;
+          overflow: hidden;
+        }
+
+        .solution-card::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 4px;
+          background: linear-gradient(90deg, #00cc88 0%, #00aa66 100%);
+        }
+
+        .solution-card:hover {
+          transform: translateY(-8px);
+          box-shadow: 0 12px 35px rgba(0, 204, 136, 0.15);
+        }
+
+        .solution-icon {
+          width: 70px;
+          height: 70px;
+          background: linear-gradient(135deg, rgba(0, 204, 136, 0.2) 0%, rgba(0, 170, 102, 0.2) 100%);
+          border-radius: 12px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 2.2rem;
+          color: #00cc88;
+          margin: 0 auto 1.5rem;
           transition: all 0.3s ease;
         }
 
-        .solution-item:hover {
-          background: #f0f4f8;
-          transform: translateX(8px);
-        }
-
-        .solution-number {
-          min-width: 50px;
-          width: 50px;
-          height: 50px;
+        .solution-card:hover .solution-icon {
+          transform: scale(1.1);
           background: linear-gradient(135deg, #00cc88 0%, #00aa66 100%);
-          border-radius: 50%;
           color: white;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 1.5rem;
+        }
+
+        .solution-card h4 {
+          font-size: 1.2rem;
           font-weight: 700;
-          flex-shrink: 0;
-        }
-
-        .solution-text h5 {
-          font-size: 1.1rem;
-          font-weight: 600;
           color: #1a1a1a;
-          margin-bottom: 0.5rem;
+          margin-bottom: 1rem;
+          margin-top: 0;
         }
 
-        .solution-text p {
+        .solution-card p {
           color: #666;
           line-height: 1.6;
-          margin: 0;
           font-size: 0.95rem;
-        }
-
-        .floating-badge {
-          position: absolute;
-          bottom: 30px;
-          right: -20px;
-          background: white;
-          border-radius: 12px;
-          padding: 1.5rem;
-          box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-          display: flex;
-          align-items: center;
-          gap: 1rem;
-          min-width: 200px;
-        }
-
-        .badge-icon {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          width: 50px;
-          height: 50px;
-          background: linear-gradient(135deg, #00cc88 0%, #00aa66 100%);
-          border-radius: 50%;
-          color: white;
-          font-size: 1.5rem;
-          flex-shrink: 0;
-        }
-
-        .badge-text strong {
-          display: block;
-          font-size: 1.3rem;
-          color: #1a1a1a;
-        }
-
-        .badge-text small {
-          display: block;
-          font-size: 0.8rem;
-          color: #999;
-          margin-top: 0.25rem;
-        }
-
-        .solution-visual {
-          position: relative;
+          margin: 0;
+          flex-grow: 1;
         }
 
         @media (max-width: 768px) {
-          .solution .section-title h2 {
+          #solution .section-title h2 {
             font-size: 1.8rem;
           }
-          .floating-badge {
-            position: static;
-            margin-top: 2rem;
+
+          #solution .section-title p {
+            font-size: 1rem;
+          }
+
+          .solution-card {
+            padding: 1.5rem;
+          }
+
+          .solution-icon {
+            width: 60px;
+            height: 60px;
+            font-size: 1.8rem;
+          }
+
+          .solution-card h4 {
+            font-size: 1.1rem;
+          }
+
+          .solution-card p {
+            font-size: 0.9rem;
           }
         }
       </style>
 
-    </section><!-- /Solution Section -->
-
-    <!-- Featured Services Section -->
-    <section id="featured-services" class="featured-services section">
-
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Featured Departments</h2>
-        <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
-      </div><!-- End Section Title -->
-
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-        <div class="row g-5">
-
-          <div class="col-lg-6" data-aos="zoom-in" data-aos-delay="100">
-            <div class="specialty-card">
-              <div class="specialty-content">
-                <div class="specialty-meta">
-                  <span class="specialty-label">Specialized Care</span>
-                </div>
-                <h3>Cardiovascular Medicine</h3>
-                <p>Advanced diagnostic imaging and interventional procedures for comprehensive heart health management
-                  with personalized treatment protocols.</p>
-                <div class="specialty-features">
-                  <span><i class="bi bi-check-circle-fill"></i>24/7 Emergency Cardiac Care</span>
-                  <span><i class="bi bi-check-circle-fill"></i>Minimally Invasive Procedures</span>
-                </div>
-                <a href="department-details.html" class="specialty-link">
-                  Explore Cardiology <i class="bi bi-arrow-right"></i>
-                </a>
-              </div>
-              <div class="specialty-visual">
-                <img src="{{ asset('frontend/assets/img/health/cardiology-1.webp') }}" alt="Cardiovascular Medicine" class="img-fluid">
-                <div class="visual-overlay">
-                  <i class="bi bi-heart-pulse"></i>
-                </div>
-              </div>
-            </div>
-          </div><!-- End Specialty Card -->
-
-          <div class="col-lg-6" data-aos="zoom-in" data-aos-delay="200">
-            <div class="specialty-card">
-              <div class="specialty-content">
-                <div class="specialty-meta">
-                  <span class="specialty-label">Expert Care</span>
-                </div>
-                <h3>Neurological Sciences</h3>
-                <p>Cutting-edge neuroimaging and neurosurgical expertise for complex brain and spinal cord conditions
-                  with innovative treatment approaches.</p>
-                <div class="specialty-features">
-                  <span><i class="bi bi-check-circle-fill"></i>Advanced Brain Imaging</span>
-                  <span><i class="bi bi-check-circle-fill"></i>Robotic Surgery</span>
-                </div>
-                <a href="department-details.html" class="specialty-link">
-                  Explore Neurology <i class="bi bi-arrow-right"></i>
-                </a>
-              </div>
-              <div class="specialty-visual">
-                <img src="{{ asset('frontend/assets/img/health/neurology-4.webp') }}" alt="Neurological Sciences" class="img-fluid">
-                <div class="visual-overlay">
-                  <i class="bi bi-cpu"></i>
-                </div>
-              </div>
-            </div>
-          </div><!-- End Specialty Card -->
-
-          <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
-            <div class="department-highlight">
-              <div class="highlight-icon">
-                <i class="bi bi-shield-plus"></i>
-              </div>
-              <h4>Orthopedic Surgery</h4>
-              <p>Comprehensive musculoskeletal care utilizing advanced arthroscopic techniques and joint replacement
-                procedures.</p>
-              <ul class="highlight-list">
-                <li>Sports Medicine</li>
-                <li>Joint Replacement</li>
-                <li>Spine Surgery</li>
-              </ul>
-              <a href="department-details.html" class="highlight-cta">Learn More</a>
-            </div>
-          </div><!-- End Department Highlight -->
-
-          <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
-            <div class="department-highlight">
-              <div class="highlight-icon">
-                <i class="bi bi-people"></i>
-              </div>
-              <h4>Pediatric Care</h4>
-              <p>Child-centered healthcare services from newborn to adolescence with family-focused treatment
-                approaches.</p>
-              <ul class="highlight-list">
-                <li>Neonatal Intensive Care</li>
-                <li>Developmental Pediatrics</li>
-                <li>Pediatric Surgery</li>
-              </ul>
-              <a href="department-details.html" class="highlight-cta">Learn More</a>
-            </div>
-          </div><!-- End Department Highlight -->
-
-          <div class="col-lg-4" data-aos="fade-up" data-aos-delay="300">
-            <div class="department-highlight">
-              <div class="highlight-icon">
-                <i class="bi bi-activity"></i>
-              </div>
-              <h4>Cancer Treatment</h4>
-              <p>Multidisciplinary oncology program offering personalized cancer care with latest therapeutic
-                innovations.</p>
-              <ul class="highlight-list">
-                <li>Precision Medicine</li>
-                <li>Immunotherapy</li>
-                <li>Radiation Oncology</li>
-              </ul>
-              <a href="department-details.html" class="highlight-cta">Learn More</a>
-            </div>
-          </div><!-- End Department Highlight -->
-
-        </div>
-
-        <div class="emergency-banner" data-aos="fade-up" data-aos-delay="400">
-          <div class="emergency-content-wrapper">
-            <div class="emergency-badge">
-              <i class="bi bi-exclamation-triangle-fill"></i>
-              <span>24/7 Emergency Response</span>
-            </div>
-            <div class="row align-items-center g-4">
-              <div class="col-lg-7">
-                <div class="emergency-text">
-                  <h3 class="emergency-title">Critical Care When You Need It Most</h3>
-                  <p class="emergency-description">Our emergency department is equipped with state-of-the-art technology and staffed by board-certified emergency physicians ready to provide immediate care.</p>
-                  <div class="emergency-features">
-                    <div class="feature">
-                      <i class="bi bi-clock-history"></i>
-                      <span>Immediate Response</span>
-                    </div>
-                    <div class="feature">
-                      <i class="bi bi-hospital"></i>
-                      <span>Advanced Equipment</span>
-                    </div>
-                    <div class="feature">
-                      <i class="bi bi-person-check"></i>
-                      <span>Expert Team</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-5">
-                <div class="emergency-cta-box">
-                  <div class="cta-badge">Available Now</div>
-                  <a href="tel:+15551234567" class="emergency-btn">
-                    <div class="btn-icon">
-                      <i class="bi bi-telephone-fill"></i>
-                    </div>
-                    <div class="btn-text">
-                      <small>Call Emergency Hotline</small>
-                      <strong>(555) 123-4567</strong>
-                    </div>
-                  </a>
-                  <p class="emergency-subtext">Response time: Under 5 minutes</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <style>
-          .emergency-banner {
-            background: linear-gradient(135deg, #d63031 0%, #e84393 50%, #c23030 100%);
-            border-radius: 16px;
-            padding: 3rem;
-            margin-top: 3rem;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 15px 50px rgba(214, 48, 49, 0.3);
-          }
-
-          .emergency-banner::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-            border-radius: 50%;
-            transform: translate(100px, -100px);
-            pointer-events: none;
-          }
-
-          .emergency-banner::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
-            border-radius: 50%;
-            transform: translate(-100px, 100px);
-            pointer-events: none;
-          }
-
-          .emergency-content-wrapper {
-            position: relative;
-            z-index: 1;
-          }
-
-          .emergency-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: rgba(255, 255, 255, 0.25);
-            color: white;
-            padding: 8px 16px;
-            border-radius: 50px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 1.5rem;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-          }
-
-          .emergency-badge i {
-            font-size: 1rem;
-          }
-
-          .emergency-title {
-            font-size: 2rem;
-            font-weight: 700;
-            color: white;
-            margin-bottom: 1rem;
-            line-height: 1.3;
-          }
-
-          .emergency-description {
-            font-size: 1rem;
-            color: rgba(255, 255, 255, 0.95);
-            line-height: 1.7;
-            margin-bottom: 1.5rem;
-          }
-
-          .emergency-features {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1.5rem;
-          }
-
-          .emergency-features .feature {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: white;
-          }
-
-          .emergency-features .feature i {
-            font-size: 1.3rem;
-            background: rgba(255, 255, 255, 0.2);
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 8px;
-          }
-
-          .emergency-cta-box {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 16px;
-            padding: 2rem;
-            text-align: center;
-            transition: all 0.3s ease;
-          }
-
-          .emergency-cta-box:hover {
-            background: rgba(255, 255, 255, 0.25);
-            border-color: rgba(255, 255, 255, 0.5);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-          }
-
-          .cta-badge {
-            display: inline-block;
-            background: rgba(255, 255, 255, 0.9);
-            color: #d63031;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 1rem;
-          }
-
-          .emergency-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 1rem;
-            background: white;
-            color: #d63031;
-            padding: 1.2rem 1.5rem;
-            border-radius: 12px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-            margin-bottom: 1rem;
-          }
-
-          .emergency-btn:hover {
-            background: #f8f9fa;
-            transform: scale(1.05);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-          }
-
-          .btn-icon {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, #d63031 0%, #e84393 100%);
-            color: white;
-            border-radius: 10px;
-            font-size: 1.5rem;
-          }
-
-          .btn-text {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            text-align: left;
-          }
-
-          .btn-text small {
-            font-size: 0.8rem;
-            font-weight: 600;
-            opacity: 0.8;
-          }
-
-          .btn-text strong {
-            font-size: 1.1rem;
-            margin-top: 0.25rem;
-          }
-
-          .emergency-subtext {
-            font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.85);
-            white-space: nowrap;
-          }
-
-          @media (max-width: 768px) {
-            .emergency-banner {
-              padding: 2rem;
-            }
-
-            .emergency-title {
-              font-size: 1.5rem;
-            }
-
-            .emergency-description {
-              font-size: 0.95rem;
-            }
-
-            .emergency-features {
-              gap: 1rem;
-            }
-
-            .emergency-features .feature {
-              font-size: 0.85rem;
-            }
-
-            .emergency-cta-box {
-              padding: 1.5rem;
-            }
-
-            .emergency-btn {
-              flex-direction: column;
-              padding: 1rem 1.2rem;
-            }
-
-            .btn-icon {
-              width: 45px;
-              height: 45px;
-              font-size: 1.2rem;
-            }
-
-            .btn-text {
-              align-items: center;
-              text-align: center;
-            }
-
-            .btn-text small {
-              font-size: 0.75rem;
-            }
-
-            .btn-text strong {
-              font-size: 1rem;
-            }
-
-            .emergency-subtext {
-              white-space: normal;
-            }
-          }
-        </style>
-
-      </div>
-
-    </section><!-- /Featured Services Section -->
-
+    </section>
+    <!-- /Solution Section -->
     <!-- Home About Section (Why Choose Us) -->
     <section id="home-about" class="home-about section">
 
@@ -1395,7 +994,216 @@
         }
       </style>
 
-    </section><!-- /Home About Section -->
+    </section>
+    <!-- /Home About Section -->
+
+    <!-- Service Section -->
+    <section id="services" class="services section">
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="section-title text-center" data-aos="fade-up">
+          <span class="section-badge">Our Services</span>
+          <h2>Our Medical Services</h2>
+          <p>Comprehensive healthcare delivered to your doorstep</p>
+        </div>
+
+        <div class="row g-4">
+
+          <!-- Service 1: Doctor Home Visit -->
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+            <div class="service-card">
+              <div class="service-icon">
+                <i class="bi bi-person-check"></i>
+              </div>
+              <h4>Doctor Home Visit</h4>
+              <p>Professional physician visit directly to your home with complete medical evaluation.</p>
+            </div>
+          </div>
+
+          <!-- Service 2: Bedside Diagnostics -->
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+            <div class="service-card">
+              <div class="service-icon">
+                <i class="bi bi-hospital"></i>
+              </div>
+              <h4>Bedside Diagnostics</h4>
+              <p>Essential medical tests performed at home for quick and accurate diagnosis.</p>
+            </div>
+          </div>
+
+          <!-- Service 3: Home Treatment -->
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
+            <div class="service-card">
+              <div class="service-icon">
+                <i class="bi bi-bandaid"></i>
+              </div>
+              <h4>Home Treatment</h4>
+              <p>Minor procedures and treatments without the need for hospital visit.</p>
+            </div>
+          </div>
+
+          <!-- Service 4: Medication Support -->
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="500">
+            <div class="service-card">
+              <div class="service-icon">
+                <i class="bi bi-capsule"></i>
+              </div>
+              <h4>Medication Support</h4>
+              <p>Expert medication guidance and management tailored to your health needs.</p>
+            </div>
+          </div>
+
+          <!-- Service 5: Elderly Care -->
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="600">
+            <div class="service-card">
+              <div class="service-icon">
+                <i class="bi bi-heart-pulse"></i>
+              </div>
+              <h4>Elderly Care</h4>
+              <p>Specialized medical care designed specifically for senior patients.</p>
+            </div>
+          </div>
+
+          <!-- Service 6: Follow-up Visits -->
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="700">
+            <div class="service-card">
+              <div class="service-icon">
+                <i class="bi bi-calendar-check"></i>
+              </div>
+              <h4>Follow-up Visits</h4>
+              <p>Ongoing treatment and monitoring to ensure optimal health recovery.</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <style>
+        #services .section-badge {
+          display: inline-block;
+          background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+          color: white;
+          padding: 6px 16px;
+          border-radius: 25px;
+          font-size: 12px;
+          font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          margin-bottom: 1rem;
+        }
+
+        #services .section-title h2 {
+          font-size: 2.5rem;
+          font-weight: 700;
+          margin-bottom: 0.5rem;
+          color: #1a1a1a;
+        }
+
+        #services .section-title p {
+          font-size: 1.1rem;
+          color: #666;
+          margin-bottom: 3rem;
+        }
+
+        .service-card {
+          background: white;
+          padding: 2rem;
+          border-radius: 12px;
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+          transition: all 0.3s ease;
+          text-align: center;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          border-top: 4px solid #17a2b8;
+          position: relative;
+          overflow: hidden;
+        }
+
+        .service-card::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 4px;
+          background: linear-gradient(90deg, #17a2b8 0%, #138496 100%);
+        }
+
+        .service-card:hover {
+          transform: translateY(-8px);
+          box-shadow: 0 12px 35px rgba(23, 162, 184, 0.15);
+        }
+
+        .service-icon {
+          width: 70px;
+          height: 70px;
+          background: linear-gradient(135deg, rgba(23, 162, 184, 0.2) 0%, rgba(19, 132, 150, 0.2) 100%);
+          border-radius: 12px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 2.2rem;
+          color: #17a2b8;
+          margin: 0 auto 1.5rem;
+          transition: all 0.3s ease;
+        }
+
+        .service-card:hover .service-icon {
+          transform: scale(1.1);
+          background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+          color: white;
+        }
+
+        .service-card h4 {
+          font-size: 1.2rem;
+          font-weight: 700;
+          color: #1a1a1a;
+          margin-bottom: 1rem;
+          margin-top: 0;
+        }
+
+        .service-card p {
+          color: #666;
+          line-height: 1.6;
+          font-size: 0.95rem;
+          margin: 0;
+          flex-grow: 1;
+        }
+
+        @media (max-width: 768px) {
+          #services .section-title h2 {
+            font-size: 1.8rem;
+          }
+
+          #services .section-title p {
+            font-size: 1rem;
+          }
+
+          .service-card {
+            padding: 1.5rem;
+          }
+
+          .service-icon {
+            width: 60px;
+            height: 60px;
+            font-size: 1.8rem;
+          }
+
+          .service-card h4 {
+            font-size: 1.1rem;
+          }
+
+          .service-card p {
+            font-size: 0.9rem;
+          }
+        }
+      </style>
+
+    </section>
+    <!-- End of Service Section -->
 
     <!-- How It Works Section -->
     <section id="how-it-works" class="how-it-works section light-background">
@@ -1890,38 +1698,7 @@
               </div>
             </div>
           </div>
-
         </div>
-
-        <div class="stats-section mt-5">
-          <div class="row text-center">
-            <div class="col-md-3 col-6" data-aos="fade-up" data-aos-delay="500">
-              <div class="stat-box">
-                <h3><span class="purecounter" data-purecounter-start="0" data-purecounter-end="15000" data-purecounter-duration="2"></span>+</h3>
-                <p>Happy Patients</p>
-              </div>
-            </div>
-            <div class="col-md-3 col-6" data-aos="fade-up" data-aos-delay="600">
-              <div class="stat-box">
-                <h3><span class="purecounter" data-purecounter-start="0" data-purecounter-end="98" data-purecounter-duration="2"></span>%</h3>
-                <p>Satisfaction Rate</p>
-              </div>
-            </div>
-            <div class="col-md-3 col-6" data-aos="fade-up" data-aos-delay="700">
-              <div class="stat-box">
-                <h3><span class="purecounter" data-purecounter-start="0" data-purecounter-end="25" data-purecounter-duration="2"></span>+</h3>
-                <p>Years Experience</p>
-              </div>
-            </div>
-            <div class="col-md-3 col-6" data-aos="fade-up" data-aos-delay="800">
-              <div class="stat-box">
-                <h3><span class="purecounter" data-purecounter-start="0" data-purecounter-end="24" data-purecounter-duration="2"></span>/7</h3>
-                <p>Available Service</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
       </div>
 
       <style>
@@ -2043,128 +1820,257 @@
 
     </section><!-- /Testimonials Section -->
 
-    <!-- Call To Action Section -->
-    <section id="call-to-action" class="call-to-action section light-background">
+    <!-- About the Founder Section -->
+    <section id="about-founder" class="about-founder section">
 
       <div class="container" data-aos="fade-up" data-aos-delay="100">
 
-        <div class="hero-content">
-          <div class="row align-items-center">
-
-            <div class="col-lg-6">
-              <div class="content-wrapper" data-aos="fade-up" data-aos-delay="200">
-                <h1>Excellence in Medical Care, Every Day</h1>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore
-                  et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
-
-                <div class="cta-wrapper">
-                  <a href="appointment.html" class="primary-cta">
-                    <span>Schedule Consultation</span>
-                    <i class="bi bi-arrow-right"></i>
-                  </a>
-                  <a href="services.html" class="secondary-cta">
-                    <span>Explore Services</span>
-                    <i class="bi bi-arrow-right"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-6">
-              <div class="image-container" data-aos="fade-left" data-aos-delay="300">
-                <img src="{{ asset('frontend/assets/img/health/facilities-9.webp') }}" alt="Medical Excellence" class="img-fluid">
-              </div>
-            </div>
-
-          </div>
+        <div class="section-title text-center" data-aos="fade-up">
+          <h2>About the Founder</h2>
+          <p class="founder-subtitle">Medical Leadership with Purpose</p>
         </div>
 
-        <div class="features-section">
+        <div class="row align-items-center g-5">
 
-          <div class="row g-0">
-
-            <div class="col-lg-4">
-              <div class="feature-block" data-aos="fade-up" data-aos-delay="200">
-                <div class="feature-icon">
-                  <i class="bi bi-shield-check"></i>
-                </div>
-                <h3>Advanced Technology</h3>
-                <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
-                  laborum.</p>
-              </div>
+          <div class="col-lg-6" data-aos="fade-right" data-aos-delay="200">
+            <div class="founder-quote-box">
+              <p class="founder-quote">❝ Healthcare should be timely, structured, dignified, and accessible — especially when patients are most vulnerable. ❞</p>
             </div>
 
-            <div class="col-lg-4">
-              <div class="feature-block" data-aos="fade-up" data-aos-delay="300">
-                <div class="feature-icon">
-                  <i class="bi bi-clock"></i>
+            <div class="founder-details mt-4">
+              <h4>Visionary Leadership</h4>
+              <p>Our founder's commitment to revolutionizing healthcare delivery stems from decades of clinical experience and a profound understanding of patients' needs. Through Premier Medical Housecall, this vision translates into accessible, compassionate, and professional home-based medical care that prioritizes patient dignity and convenience.</p>
+
+              <div class="founder-highlights mt-4">
+                <div class="highlight-item">
+                  <div class="highlight-icon">
+                    <i class="bi bi-check-circle-fill"></i>
+                  </div>
+                  <div class="highlight-content">
+                    <h5>25+ Years Medical Experience</h5>
+                    <p>Pioneering innovations in home healthcare delivery</p>
+                  </div>
                 </div>
-                <h3>24/7 Availability</h3>
-                <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur
-                  excepteur.</p>
+
+                <div class="highlight-item">
+                  <div class="highlight-icon">
+                    <i class="bi bi-check-circle-fill"></i>
+                  </div>
+                  <div class="highlight-content">
+                    <h5>Patient-Centric Philosophy</h5>
+                    <p>Dedicated to making healthcare accessible and dignified</p>
+                  </div>
+                </div>
+
+                <div class="highlight-item">
+                  <div class="highlight-icon">
+                    <i class="bi bi-check-circle-fill"></i>
+                  </div>
+                  <div class="highlight-content">
+                    <h5>Trusted by Thousands</h5>
+                    <p>Leading the transformation in home-based medical care</p>
+                  </div>
+                </div>
               </div>
             </div>
-
-            <div class="col-lg-4">
-              <div class="feature-block" data-aos="fade-up" data-aos-delay="400">
-                <div class="feature-icon">
-                  <i class="bi bi-people"></i>
-                </div>
-                <h3>Expert Team</h3>
-                <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium
-                  totam rem.</p>
-              </div>
-            </div>
-
           </div>
 
-        </div>
-
-        <div class="contact-block">
-          <div class="row">
-
-            <div class="col-lg-8">
-              <div class="contact-content" data-aos="fade-up" data-aos-delay="200">
-                <h2>Need Immediate Medical Assistance?</h2>
-                <p>Our emergency response team is available around the clock to provide immediate medical support when
-                  you need it most.</p>
+          <div class="col-lg-6" data-aos="fade-left" data-aos-delay="300">
+            <div class="founder-image-box">
+              <img src="{{ asset('frontend/assets/img/health/staff-2.webp') }}" alt="Founder Portrait" class="img-fluid">
+              <div class="founder-badge">
+                <span class="badge-label">Founder & CEO</span>
               </div>
             </div>
-
-            <div class="col-lg-4">
-              <div class="contact-actions" data-aos="fade-up" data-aos-delay="300">
-                <a href="tel:5551234567" class="emergency-call">
-                  <i class="bi bi-telephone"></i>
-                  <span>(555) 123-4567</span>
-                </a>
-                <a href="contact.html" class="contact-link">Find Location</a>
-              </div>
-            </div>
-
           </div>
+
         </div>
 
       </div>
 
-    </section><!-- /Call To Action Section -->
+      <style>
+        #about-founder {
+          padding: 5rem 0;
+          background: white;
+        }
+
+        .about-founder .section-title {
+          margin-bottom: 3rem;
+        }
+
+        .about-founder .section-title h2 {
+          font-size: 2.5rem;
+          font-weight: 700;
+          color: #1a1a1a;
+          margin-bottom: 0.5rem;
+        }
+
+        .founder-subtitle {
+          font-size: 1.25rem;
+          color: #0084d6;
+          font-weight: 600;
+        }
+
+        .founder-quote-box {
+          background: linear-gradient(135deg, rgba(0, 132, 214, 0.05) 0%, rgba(0, 95, 163, 0.05) 100%);
+          padding: 2.5rem;
+          border-radius: 12px;
+          border-left: 4px solid #0084d6;
+          position: relative;
+        }
+
+        .quote-icon {
+          font-size: 2.5rem;
+          color: #0084d6;
+          opacity: 0.3;
+          margin-bottom: 1rem;
+        }
+
+        .founder-quote {
+          font-size: 1.1rem;
+          font-style: italic;
+          color: #1a1a1a;
+          line-height: 1.8;
+          margin: 0;
+          font-weight: 500;
+        }
+
+        .founder-details h4 {
+          font-size: 1.4rem;
+          font-weight: 700;
+          color: #1a1a1a;
+          margin-bottom: 1rem;
+        }
+
+        .founder-details p {
+          color: #666;
+          line-height: 1.8;
+          font-size: 0.95rem;
+        }
+
+        .founder-highlights {
+          display: flex;
+          flex-direction: column;
+          gap: 1.5rem;
+        }
+
+        .highlight-item {
+          display: flex;
+          gap: 1rem;
+        }
+
+        .highlight-icon {
+          flex-shrink: 0;
+          width: 40px;
+          height: 40px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: linear-gradient(135deg, #0084d6 0%, #005fa3 100%);
+          color: white;
+          border-radius: 50%;
+          font-size: 1.2rem;
+        }
+
+        .highlight-content h5 {
+          font-size: 0.95rem;
+          font-weight: 700;
+          color: #1a1a1a;
+          margin-bottom: 0.3rem;
+        }
+
+        .highlight-content p {
+          color: #666;
+          font-size: 0.85rem;
+          margin: 0;
+          line-height: 1.6;
+        }
+
+        .founder-image-box {
+          position: relative;
+          border-radius: 12px;
+          overflow: hidden;
+          box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .founder-image-box img {
+          width: 100%;
+          display: block;
+          border-radius: 12px;
+        }
+
+        .founder-badge {
+          position: absolute;
+          bottom: 20px;
+          right: 20px;
+          background: linear-gradient(135deg, #0084d6 0%, #005fa3 100%);
+          color: white;
+          padding: 10px 20px;
+          border-radius: 25px;
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .badge-label {
+          font-weight: 600;
+          font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+          #about-founder {
+            padding: 3rem 0;
+          }
+
+          .about-founder .section-title h2 {
+            font-size: 1.8rem;
+          }
+
+          .founder-subtitle {
+            font-size: 1.1rem;
+          }
+
+          .founder-quote-box {
+            padding: 1.5rem;
+          }
+
+          .quote-icon {
+            font-size: 2rem;
+          }
+
+          .founder-quote {
+            font-size: 0.95rem;
+          }
+
+          .founder-details h4 {
+            font-size: 1.2rem;
+          }
+
+          .founder-details p {
+            font-size: 0.9rem;
+          }
+
+          .highlight-content h5 {
+            font-size: 0.85rem;
+          }
+
+          .highlight-content p {
+            font-size: 0.8rem;
+          }
+        }
+      </style>
+
+    </section><!-- /About the Founder Section -->
 
     <!-- Contact Section -->
     <section id="contact-preview" class="contact-preview section">
-
       <div class="container" data-aos="fade-up" data-aos-delay="100">
-
         <div class="row align-items-center g-5">
-
           <div class="col-lg-6" data-aos="fade-right" data-aos-delay="200">
             <div class="contact-info-wrapper">
               <div class="section-badge mb-3">
                 <span class="badge-text">Get in Touch</span>
               </div>
-
               <h2 class="section-heading">Ready to Experience Better Healthcare?</h2>
-
               <p>Don't wait in hospital queues. Let us bring the care you need to your front door.</p>
-
               <div class="contact-details">
 
                 <div class="detail-item" data-aos="fade-up" data-aos-delay="300">
@@ -2376,5 +2282,476 @@
       </style>
 
     </section><!-- /Contact Section -->
+
+    <!-- Coverage Area Section -->
+    <section id="coverage-area" class="coverage-area section">
+      <div class="container">
+        <div class="section-title text-center mb-5" data-aos="fade-up" data-aos-delay="100">
+          <h2>Coverage Area</h2>
+          {{-- <p>Service Coverage</p>
+          <div class="section-subtitle mt-3">
+            <p>PMH provides services in central areas of Khulna</p>
+          </div> --}}
+        </div>
+
+        <div class="row justify-content-center">
+          <div class="col-lg-8">
+            <div class="coverage-grid" data-aos="fade-up" data-aos-delay="200">
+              <div class="coverage-item">
+                <div class="coverage-icon">
+                  <i class="bi bi-geo-alt-fill"></i>
+                </div>
+                <div class="coverage-name">Sonadanga</div>
+              </div>
+
+              <div class="coverage-item">
+                <div class="coverage-icon">
+                  <i class="bi bi-geo-alt-fill"></i>
+                </div>
+                <div class="coverage-name">Khalishpur</div>
+              </div>
+
+              <div class="coverage-item">
+                <div class="coverage-icon">
+                  <i class="bi bi-geo-alt-fill"></i>
+                </div>
+                <div class="coverage-name">Daulatpur</div>
+              </div>
+
+              <div class="coverage-item">
+                <div class="coverage-icon">
+                  <i class="bi bi-geo-alt-fill"></i>
+                </div>
+                <div class="coverage-name">Khulna Sadar</div>
+              </div>
+
+              <div class="coverage-item">
+                <div class="coverage-icon">
+                  <i class="bi bi-geo-alt-fill"></i>
+                </div>
+                <div class="coverage-name">Boyra</div>
+              </div>
+
+              <div class="coverage-item">
+                <div class="coverage-icon">
+                  <i class="bi bi-geo-alt-fill"></i>
+                </div>
+                <div class="coverage-name">Rupsha</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <style>
+        #coverage-area {
+          padding: 5rem 0;
+          background: linear-gradient(135deg, rgba(23, 162, 184, 0.03) 0%, rgba(0, 132, 214, 0.03) 100%);
+        }
+
+        .coverage-area .section-title h2 {
+          font-size: 2.5rem;
+          font-weight: 700;
+          color: #1a1a1a;
+          margin-bottom: 0.5rem;
+        }
+
+        .coverage-area .section-title p {
+          font-size: 1.1rem;
+          color: #17a2b8;
+          font-weight: 600;
+          margin: 0;
+        }
+
+        .section-subtitle p {
+          font-size: 1rem;
+          color: #666;
+          margin: 0;
+        }
+
+        .coverage-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 2rem;
+        }
+
+        .coverage-item {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          padding: 2rem 1.5rem;
+          background: white;
+          border-radius: 12px;
+          border: 2px solid transparent;
+          border-top: 3px solid #17a2b8;
+          transition: all 0.3s ease;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .coverage-item:hover {
+          transform: translateY(-8px);
+          box-shadow: 0 8px 20px rgba(23, 162, 184, 0.15);
+          border-top-color: #0084d6;
+        }
+
+        .coverage-icon {
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+          background: linear-gradient(135deg, #17a2b8 0%, #0084d6 100%);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: white;
+          font-size: 1.5rem;
+          margin-bottom: 1rem;
+          transition: all 0.3s ease;
+        }
+
+        .coverage-item:hover .coverage-icon {
+          transform: scale(1.1);
+          box-shadow: 0 4px 15px rgba(0, 132, 214, 0.3);
+        }
+
+        .coverage-name {
+          font-size: 1rem;
+          font-weight: 600;
+          color: #1a1a1a;
+          letter-spacing: 0.3px;
+        }
+
+        @media (max-width: 768px) {
+          #coverage-area {
+            padding: 3rem 0;
+          }
+
+          .coverage-area .section-title h2 {
+            font-size: 1.8rem;
+          }
+
+          .coverage-area .section-title p {
+            font-size: 0.95rem;
+          }
+
+          .section-subtitle p {
+            font-size: 0.9rem;
+          }
+
+          .coverage-grid {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+          }
+
+          .coverage-item {
+            padding: 1.5rem 1rem;
+          }
+
+          .coverage-icon {
+            width: 45px;
+            height: 45px;
+            font-size: 1.2rem;
+          }
+
+          .coverage-name {
+            font-size: 0.9rem;
+          }
+        }
+      </style>
+
+    </section><!-- /Coverage Area Section -->
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="pricing section light-background">
+      <div class="container">
+        <div class="section-title text-center mb-5" data-aos="fade-up" data-aos-delay="100">
+          <h2>Pricing</h2>
+          <p>Affordable Healthcare at Your Doorstep</p>
+        </div>
+
+        <div class="row justify-content-center">
+          <div class="col-lg-6">
+            <div class="pricing-card" data-aos="fade-up" data-aos-delay="200">
+              <div class="pricing-header">
+                <div class="price-amount">
+                  <span class="currency">৳</span>
+                  <span class="amount">5,000</span>
+                </div>
+                <p class="price-label">Per Visit</p>
+                <p class="price-subtitle">Starting from</p>
+              </div>
+
+              <div class="pricing-features">
+                <h4 class="features-title">Includes:</h4>
+                <ul class="features-list">
+                  <li>
+                    <i class="bi bi-check-circle-fill"></i>
+                    <span>30-45 minute physician consultation</span>
+                  </li>
+                  <li>
+                    <i class="bi bi-check-circle-fill"></i>
+                    <span>Detailed examination</span>
+                  </li>
+                  <li>
+                    <i class="bi bi-check-circle-fill"></i>
+                    <span>Digital prescription</span>
+                  </li>
+                  <li>
+                    <i class="bi bi-check-circle-fill"></i>
+                    <span>Treatment planning</span>
+                  </li>
+                  <li>
+                    <i class="bi bi-check-circle-fill"></i>
+                    <span>Follow-up support</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="pricing-action">
+                <a href="{{ route('contact', ['lang' => getCurrentLanguage()]) }}" class="btn btn-primary btn-lg w-100">
+                  <i class="bi bi-calendar2-check me-2"></i>
+                  Book Now
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pricing-note text-center mt-5" data-aos="fade-up" data-aos-delay="300">
+          <p><i class="bi bi-info-circle me-2"></i>Prices may vary based on service type and complexity. Contact us for detailed pricing information.</p>
+        </div>
+      </div>
+
+      <style>
+        #pricing {
+          padding: 5rem 0;
+        }
+
+        .pricing .section-title h2 {
+          font-size: 2.5rem;
+          font-weight: 700;
+          color: #1a1a1a;
+          margin-bottom: 0.5rem;
+        }
+
+        .pricing .section-title p {
+          font-size: 1.1rem;
+          color: #666;
+          margin: 0;
+        }
+
+        .pricing-card {
+          background: white;
+          border-radius: 16px;
+          overflow: hidden;
+          box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+          transition: all 0.3s ease;
+          border-top: 4px solid #00cc88;
+          position: relative;
+        }
+
+        .pricing-card::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 4px;
+          background: linear-gradient(90deg, #00cc88 0%, #00aa66 100%);
+        }
+
+        .pricing-card:hover {
+          transform: translateY(-8px);
+          box-shadow: 0 15px 45px rgba(0, 204, 136, 0.2);
+        }
+
+        .pricing-header {
+          background: linear-gradient(135deg, rgba(0, 204, 136, 0.08) 0%, rgba(0, 170, 102, 0.08) 100%);
+          padding: 3rem 2rem;
+          text-align: center;
+          border-bottom: 1px solid rgba(0, 204, 136, 0.1);
+        }
+
+        .price-amount {
+          display: flex;
+          align-items: flex-start;
+          justify-content: center;
+          gap: 0.5rem;
+          margin-bottom: 1rem;
+        }
+
+        .currency {
+          font-size: 1.8rem;
+          font-weight: 600;
+          color: #00cc88;
+        }
+
+        .amount {
+          font-size: 3.5rem;
+          font-weight: 700;
+          color: #1a1a1a;
+        }
+
+        .price-label {
+          font-size: 1.2rem;
+          font-weight: 600;
+          color: #1a1a1a;
+          margin-bottom: 0.3rem;
+        }
+
+        .price-subtitle {
+          font-size: 0.95rem;
+          color: #666;
+          margin: 0;
+        }
+
+        .pricing-features {
+          padding: 2.5rem 2rem;
+        }
+
+        .features-title {
+          font-size: 1.1rem;
+          font-weight: 700;
+          color: #1a1a1a;
+          margin-bottom: 1.5rem;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+        }
+
+        .features-list {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+        }
+
+        .features-list li {
+          display: flex;
+          align-items: flex-start;
+          gap: 1rem;
+          margin-bottom: 1.2rem;
+          font-size: 0.95rem;
+          color: #666;
+          line-height: 1.6;
+        }
+
+        .features-list li:last-child {
+          margin-bottom: 0;
+        }
+
+        .features-list i {
+          flex-shrink: 0;
+          width: 24px;
+          height: 24px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #00cc88;
+          margin-top: 0.2rem;
+          font-size: 1.1rem;
+        }
+
+        .features-list span {
+          color: #1a1a1a;
+          font-weight: 500;
+        }
+
+        .pricing-action {
+          padding: 0 2rem 2rem;
+        }
+
+        .btn {
+          display: inline-block;
+          padding: 12px 24px;
+          border-radius: 8px;
+          text-decoration: none;
+          font-weight: 600;
+          transition: all 0.3s ease;
+          cursor: pointer;
+        }
+
+        .btn-primary {
+          background: linear-gradient(135deg, #00cc88 0%, #00aa66 100%);
+          color: white !important;
+          border: none;
+          padding: 14px 32px !important;
+          font-size: 1rem;
+        }
+
+        .btn-primary:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 8px 25px rgba(0, 204, 136, 0.3);
+        }
+
+        .w-100 {
+          width: 100%;
+        }
+
+        .pricing-note {
+          margin-top: 2rem;
+          padding: 1.5rem 2rem;
+          background: linear-gradient(135deg, rgba(0, 204, 136, 0.05) 0%, rgba(0, 170, 102, 0.05) 100%);
+          border-radius: 12px;
+          border-left: 4px solid #00cc88;
+          color: #666;
+          font-size: 0.95rem;
+          line-height: 1.6;
+        }
+
+        .pricing-note i {
+          color: #00cc88;
+        }
+
+        @media (max-width: 768px) {
+          #pricing {
+            padding: 3rem 0;
+          }
+
+          .pricing .section-title h2 {
+            font-size: 1.8rem;
+          }
+
+          .pricing .section-title p {
+            font-size: 1rem;
+          }
+
+          .pricing-header {
+            padding: 2.5rem 1.5rem;
+          }
+
+          .amount {
+            font-size: 2.8rem;
+          }
+
+          .price-label {
+            font-size: 1rem;
+          }
+
+          .pricing-features {
+            padding: 2rem 1.5rem;
+          }
+
+          .features-title {
+            font-size: 1rem;
+          }
+
+          .features-list li {
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+          }
+
+          .pricing-action {
+            padding: 0 1.5rem 1.5rem;
+          }
+
+          .pricing-note {
+            margin-top: 1.5rem;
+            padding: 1.2rem 1.5rem;
+            font-size: 0.9rem;
+          }
+        }
+      </style>
+
+    </section><!-- /Pricing Section -->
 
 @endsection
