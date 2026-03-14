@@ -1,27 +1,13 @@
 @extends('frontend.layouts.master')
 
-@php
-    $lang = getCurrentLanguage();
-@endphp
+@section('title', isset($service) ? (app()->getLocale() === 'bn' ? ($service->title_bn ?? $service->title_en) : $service->title_en) . ' - Premier Medical Housecall' : 'Service Details - Premier Medical Housecall')
 
-@section('title', isset($service) ? ($lang === 'bn' ? ($service->title_bn ?? $service->title_en) : $service->title_en) . ' - Premier Medical Housecall' : 'Service Details - Premier Medical Housecall')
+@section('description', isset($service) ? Illuminate\Support\Str::limit(strip_tags(app()->getLocale() === 'bn' ? ($service->description_bn ?? $service->description_en) : $service->description_en), 160) : 'Learn more about our specialized medical services.')
 
-@section('description', isset($service) ? Illuminate\Support\Str::limit(strip_tags($lang === 'bn' ? ($service->description_bn ?? $service->description_en) : $service->description_en), 160) : 'Learn more about our specialized medical services.')
-
-@section('keywords', isset($service) ? ($lang === 'bn' ? ($service->title_bn ?? $service->title_en) : $service->title_en) . ', medical services, healthcare' : 'service details, medical services, healthcare')
+@section('keywords', isset($service) ? (app()->getLocale() === 'bn' ? ($service->title_bn ?? $service->title_en) : $service->title_en) . ', medical services, healthcare' : 'service details, medical services, healthcare')
 
 @section('content')
-    <script>
-        // Get language from URL or localStorage
-        const urlParams = new URLSearchParams(window.location.search);
-        const langParam = urlParams.get('lang');
-        const savedLang = localStorage.getItem('language') || 'en';
-        const currentLang = langParam || savedLang;
 
-        // Store language preference
-        localStorage.setItem('language', currentLang);
-        document.documentElement.lang = currentLang;
-    </script>
 
     @if(isset($service))
     <!-- Page Title -->
@@ -30,9 +16,9 @@
         <div class="container">
           <div class="row d-flex justify-content-center text-center">
             <div class="col-lg-8">
-              <h1 class="heading-title">{{ $lang === 'bn' ? ($service->title_bn ?? $service->title_en) : $service->title_en }}</h1>
+              <h1 class="heading-title">{{ app()->getLocale() === 'bn' ? ($service->title_bn ?? $service->title_en) : $service->title_en }}</h1>
               <p class="mb-0">
-                {{ Illuminate\Support\Str::limit(strip_tags($lang === 'bn' ? ($service->description_bn ?? $service->description_en) : $service->description_en), 150) }}
+                {{ Illuminate\Support\Str::limit(strip_tags(app()->getLocale() === 'bn' ? ($service->description_bn ?? $service->description_en) : $service->description_en), 150) }}
               </p>
             </div>
           </div>
@@ -41,9 +27,9 @@
       <nav class="breadcrumbs">
         <div class="container">
           <ol>
-            <li><a href="{{ route('home') }}">{{ $lang === 'bn' ? 'হোম' : 'Home' }}</a></li>
-            <li><a href="{{ route('services') }}">{{ $lang === 'bn' ? 'সেবাসমূহ' : 'Services' }}</a></li>
-            <li class="current">{{ $lang === 'bn' ? ($service->title_bn ?? $service->title_en) : $service->title_en }}</li>
+            <li><a href="{{ route('home') }}">{{ app()->getLocale() === 'bn' ? 'হোম' : 'Home' }}</a></li>
+            <li><a href="{{ route('services') }}">{{ app()->getLocale() === 'bn' ? 'সেবাসমূহ' : 'Services' }}</a></li>
+            <li class="current">{{ app()->getLocale() === 'bn' ? ($service->title_bn ?? $service->title_en) : $service->title_en }}</li>
           </ol>
         </div>
       </nav>
@@ -60,8 +46,8 @@
           <div class="row">
             <div class="col-lg-8 mx-auto text-center mb-5" data-aos="fade-up" data-aos-delay="150">
               <div class="service-header">
-                <h2>{{ $lang === 'bn' ? ($service->title_bn ?? $service->title_en) : $service->title_en }}</h2>
-                <p class="lead">{{ Illuminate\Support\Str::limit(strip_tags($lang === 'bn' ? ($service->description_bn ?? $service->description_en) : $service->description_en), 150) }}</p>
+                <h2>{{ app()->getLocale() === 'bn' ? ($service->title_bn ?? $service->title_en) : $service->title_en }}</h2>
+                <p class="lead">{{ Illuminate\Support\Str::limit(strip_tags(app()->getLocale() === 'bn' ? ($service->description_bn ?? $service->description_en) : $service->description_en), 150) }}</p>
               </div>
             </div>
           </div>
@@ -72,7 +58,7 @@
             <div class="col-lg-5" data-aos="fade-right" data-aos-delay="200">
               <div class="service-details">
                 <div class="description-content">
-                  {!! $service->description_en !!}
+                  {!! app()->getLocale() === 'bn' ? ($service->description_bn ?? $service->description_en) : $service->description_en !!}
                 </div>
               </div>
             </div>
@@ -94,7 +80,7 @@
           <!-- Related Services -->
           <div class="row gy-4 mt-5">
             <div class="col-12" data-aos="fade-up" data-aos-delay="250">
-              <h3>Other Services</h3>
+              <h3>{{ app()->getLocale() === 'bn' ? 'অন্যান্য সেবাসমূহ' : 'Other Services' }}</h3>
             </div>
 
             @php
@@ -116,10 +102,10 @@
                       </div>
                     </div>
                     <div class="service-content">
-                      <h4>{{ $related->title_en }}</h4>
-                      <p>{{ Illuminate\Support\Str::limit(strip_tags($related->description_en), 80) }}</p>
-                      <a href="{{ route('service-details', ['slug' => $related->slug_en]) }}" class="service-btn">
-                        <span>Learn More</span>
+                      <h4>{{ app()->getLocale() === 'bn' ? ($related->title_bn ?? $related->title_en) : $related->title_en }}</h4>
+                      <p>{{ Illuminate\Support\Str::limit(strip_tags(app()->getLocale() === 'bn' ? ($related->description_bn ?? $related->description_en) : $related->description_en), 80) }}</p>
+                      <a href="{{ route('service-details', ['slug' => app()->getLocale() === 'bn' ? $related->slug_bn : $related->slug_en]) }}" class="service-btn">
+                        <span>{{ app()->getLocale() === 'bn' ? 'আরও জানুন' : 'Learn More' }}</span>
                         <i class="fas fa-arrow-right"></i>
                       </a>
                     </div>

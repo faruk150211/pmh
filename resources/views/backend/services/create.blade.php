@@ -79,6 +79,37 @@
             </div>
         </div>
 
+        <!-- Short Description Section -->
+        <div class="card mb-4" style="border: none; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+            <div class="card-header" style="background-color: #f8f9fa; border-bottom: 2px solid #e9ecef; padding: 20px;">
+                <h5 class="mb-0" style="color: #2c3e50; font-weight: 600;">
+                    <i class="fas fa-file-alt" style="color: #f39c12;"></i> Short Description
+                </h5>
+            </div>
+            <div class="card-body" style="padding: 20px;">
+                <div class="row">
+                    <div class="col-12 mb-3">
+                        <label for="short_description_en" class="form-label" style="font-weight: 500; color: #2c3e50;">Short Description (English)</label>
+                        <textarea class="form-control @error('short_description_en') is-invalid @enderror" id="short_description_en" name="short_description_en" rows="2" placeholder="Enter a brief description in English (max 500 characters)">{{ old('short_description_en') }}</textarea>
+                        <small class="text-muted">Brief summary for homepage display</small>
+                        @error('short_description_en')
+                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 mb-3">
+                        <label for="short_description_bn" class="form-label" style="font-weight: 500; color: #2c3e50;">Short Description (Bengali)</label>
+                        <textarea class="form-control @error('short_description_bn') is-invalid @enderror" id="short_description_bn" name="short_description_bn" rows="2" placeholder="সংক্ষিপ্ত বর্ণনা (সর্বোচ্চ ৫০০ অক্ষর)">{{ old('short_description_bn') }}</textarea>
+                        <small class="text-muted">হোমপেজ প্রদর্শনের জন্য সংক্ষিপ্ত সারসংক্ষেপ</small>
+                        @error('short_description_bn')
+                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Description Section -->
         <div class="card mb-4" style="border: none; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
             <div class="card-header" style="background-color: #f8f9fa; border-bottom: 2px solid #e9ecef; padding: 20px;">
@@ -131,6 +162,34 @@
                         @enderror
                         <div id="imagePreview" style="margin-top: 15px;"></div>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Display Settings -->
+        <div class="card mb-4" style="border: none; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+            <div class="card-header" style="background-color: #f8f9fa; border-bottom: 2px solid #e9ecef; padding: 20px;">
+                <h5 class="mb-0" style="color: #2c3e50; font-weight: 600;">
+                    <i class="fas fa-eye" style="color: #9b59b6;"></i> Display Settings
+                </h5>
+            </div>
+            <div class="card-body" style="padding: 20px;">
+                <div class="mb-3">
+                    <div class="form-check" style="padding-left: 1.5rem;">
+                        <input class="form-check-input" type="checkbox" id="show_on_home" name="show_on_home" value="1" {{ old('show_on_home') ? 'checked' : '' }} style="width: 20px; height: 20px; cursor: pointer;">
+                        <label class="form-check-label" for="show_on_home" style="font-weight: 500; color: #2c3e50; margin-left: 8px; cursor: pointer;">
+                            Show on Homepage
+                        </label>
+                        <small class="form-text text-muted d-block" style="margin-left: 0; margin-top: 8px;">Check this box to display this service on the homepage services section</small>
+                    </div>
+                </div>
+                <div class="mb-0">
+                    <label for="order" class="form-label" style="font-weight: 500; color: #2c3e50; margin-bottom: 8px;">Display Order</label>
+                    <input type="number" class="form-control @error('order') is-invalid @enderror" id="order" name="order" value="{{ old('order', 0) }}" min="0" placeholder="Enter order number (0, 1, 2, ...)">
+                    <small class="form-text text-muted">Lower numbers appear first. Services with the same order are sorted by creation date.</small>
+                    @error('order')
+                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                    @enderror
                 </div>
             </div>
         </div>

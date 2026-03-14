@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ContactMessage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -53,6 +54,17 @@ class ContactController extends Controller
         ]);
 
         try {
+            // Save to database first
+            ContactMessage::create([
+                'name' => $validated['name'],
+                'email' => $validated['email'],
+                'phone' => $validated['phone'] ?? null,
+                'subject' => $validated['subject'],
+                'message' => $validated['message'],
+                'is_read' => false,
+                'status' => 'pending',
+            ]);
+
             // Send email to admin - using configured admin email or from address as fallback
             $adminEmail = env('ADMIN_EMAIL', config('mail.from.address'));
             Mail::to($adminEmail)->send(
@@ -67,3 +79,4 @@ class ContactController extends Controller
         }
     }
 }
+

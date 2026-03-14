@@ -9,61 +9,10 @@
 @section('content')
 
 @php
-    $lang = getCurrentLanguage();
     $missionVision = \App\Models\MissionAndVision::first();
 @endphp
 
-    <script>
-        // Get language from URL or localStorage
-        const urlParams = new URLSearchParams(window.location.search);
-        const langParam = urlParams.get('lang');
-        const savedLang = localStorage.getItem('language') || 'en';
-        const currentLang = langParam || savedLang;
 
-        // Store language preference
-        localStorage.setItem('language', currentLang);
-        document.documentElement.lang = currentLang;
-
-        // Function to convert English numerals to Bengali
-        function convertToBengaliNumerals(text) {
-            const bengaliMap = {
-                '0': '०', '1': '१', '2': '२', '3': '३', '4': '४',
-                '5': '५', '6': '६', '7': '७', '8': '८', '9': '९'
-            };
-            return text.replace(/[0-9]/g, digit => bengaliMap[digit]);
-        }
-
-        // Convert purecounter values to Bengali if language is Bengali
-        if (currentLang === 'bn') {
-            // Wait for DOM to be ready and purecounter to initialize
-            document.addEventListener('DOMContentLoaded', function() {
-                // Convert existing purecounter values
-                const pureCounters = document.querySelectorAll('.purecounter');
-                pureCounters.forEach(counter => {
-                    // Watch for changes to the counter's text content
-                    const observer = new MutationObserver(function(mutations) {
-                        const text = counter.textContent;
-                        // Check if text contains numbers
-                        if (/[0-9]/.test(text)) {
-                            counter.textContent = convertToBengaliNumerals(text);
-                        }
-                    });
-                    observer.observe(counter, { childList: true, characterData: true, subtree: true });
-
-                    // Also check periodically for purecounter to finish animating
-                    let checkCount = 0;
-                    const interval = setInterval(() => {
-                        const text = counter.textContent;
-                        if (/[0-9]/.test(text) && !text.includes('०') && !text.includes('१')) {
-                            counter.textContent = convertToBengaliNumerals(text);
-                        }
-                        checkCount++;
-                        if (checkCount > 30) clearInterval(interval); // Stop after 3 seconds
-                    }, 100);
-                });
-            });
-        }
-    </script>
 
     <!-- Page Title -->
     <div class="page-title">
@@ -72,10 +21,10 @@
           <div class="row d-flex justify-content-center text-center">
             <div class="col-lg-8">
               <h1 class="heading-title">
-                {{ $lang === 'bn' ? ($missionVision?->heading_bn ?? 'আমাদের মিশন এবং ভিশন') : ($missionVision?->heading_en ?? 'Mission & Vision') }}
+                {{ app()->getLocale() === 'bn' ? ($missionVision?->heading_bn ?? 'আমাদের মিশন এবং ভিশন') : ($missionVision?->heading_en ?? 'Mission & Vision') }}
               </h1>
               <p class="mb-0">
-                {{ $lang === 'bn' ? ($missionVision?->description_bn ?? 'আমাদের মিশন এবং ভিশন আমরা যে প্রতিটি সিদ্ধান্ত নিই এবং প্রতিটি রোগীর সেবা করি তার গাইড করে। আমরা উদ্ভাবন, সহানুভূতি এবং উৎকর্ষতার মাধ্যমে স্বাস্থ্যসেবা রূপান্তরিত করতে প্রতিশ্রুতিবদ্ধ।') : ($missionVision?->description_en ?? 'Our mission and vision guide every decision we make and every patient we serve. We are committed to transforming healthcare through innovation, compassion, and excellence.') }}
+                {{ app()->getLocale() === 'bn' ? ($missionVision?->description_bn ?? 'আমাদের মিশন এবং ভিশন আমরা যে প্রতিটি সিদ্ধান্ত নিই এবং প্রতিটি রোগীর সেবা করি তার গাইড করে। আমরা উদ্ভাবন, সহানুভূতি এবং উৎকর্ষতার মাধ্যমে স্বাস্থ্যসেবা রূপান্তরিত করতে প্রতিশ্রুতিবদ্ধ।') : ($missionVision?->description_en ?? 'Our mission and vision guide every decision we make and every patient we serve. We are committed to transforming healthcare through innovation, compassion, and excellence.') }}
               </p>
             </div>
           </div>
@@ -85,7 +34,7 @@
         <div class="container">
           <ol>
             <li><a href="{{ route('home') }}">Home</a></li>
-            <li class="current">{{ $lang === 'bn' ? 'মিশন এবং ভিশন' : 'Mission & Vision' }}</li>
+            <li class="current">{{ app()->getLocale() === 'bn' ? 'মিশন এবং ভিশন' : 'Mission & Vision' }}</li>
           </ol>
         </div>
       </nav>
@@ -101,10 +50,10 @@
           <div class="col-lg-6" data-aos="fade-right" data-aos-delay="100">
             <div class="mission-content">
               <div class="section-badge">
-                <span>{{ $lang === 'bn' ? 'আমাদের উদ্দেশ্য' : 'Our Purpose' }}</span>
+                <span>{{ app()->getLocale() === 'bn' ? 'আমাদের উদ্দেশ্য' : 'Our Purpose' }}</span>
               </div>
-              <h2>{{ $lang === 'bn' ? ($missionVision?->mission_heading_bn ?? 'আমাদের মিশন') : ($missionVision?->mission_heading_en ?? 'Our Mission') }}</h2>
-              <p class="lead">{!! $lang === 'bn' ? ($missionVision?->mission_content_bn ?? 'প্রিমিয়ার মেডিকেল হাউসকলে আমাদের মিশন আমাদের সম্প্রদায়ের রোগী এবং পরিবারগুলির জীবনযাত্রার মান বৃদ্ধি করে এমন অ্যাক্সেসযোগ্য, করুণাময় এবং প্রমাণ-ভিত্তিক স্বাস্থ্যসেবা পরিষেবা প্রদান করা।') : ($missionVision?->mission_content_en ?? 'To deliver accessible, compassionate, and evidence-based healthcare services that enhance the quality of life for patients and families in our community.') !!}</p>
+              <h2>{{ app()->getLocale() === 'bn' ? ($missionVision?->mission_heading_bn ?? 'আমাদের মিশন') : ($missionVision?->mission_heading_en ?? 'Our Mission') }}</h2>
+              <p class="lead">{!! app()->getLocale() === 'bn' ? ($missionVision?->mission_content_bn ?? 'প্রিমিয়ার মেডিকেল হাউসকলে আমাদের মিশন আমাদের সম্প্রদায়ের রোগী এবং পরিবারগুলির জীবনযাত্রার মান বৃদ্ধি করে এমন অ্যাক্সেসযোগ্য, করুণাময় এবং প্রমাণ-ভিত্তিক স্বাস্থ্যসেবা পরিষেবা প্রদান করা।') : ($missionVision?->mission_content_en ?? 'To deliver accessible, compassionate, and evidence-based healthcare services that enhance the quality of life for patients and families in our community.') !!}</p>
             </div>
           </div>
 
@@ -127,10 +76,10 @@
           <div class="col-lg-6" data-aos="fade-left" data-aos-delay="200">
             <div class="vision-content">
               <div class="section-badge">
-                <span>{{ $lang === 'bn' ? 'আমাদের ভবিষ্যৎ' : 'Our Future' }}</span>
+                <span>{{ app()->getLocale() === 'bn' ? 'আমাদের ভবিষ্যৎ' : 'Our Future' }}</span>
               </div>
-              <h2>{{ $lang === 'bn' ? ($missionVision?->vision_heading_bn ?? 'আমাদের ভিশন') : ($missionVision?->vision_heading_en ?? 'Our Vision') }}</h2>
-              <p class="lead">{!! $lang === 'bn' ? ($missionVision?->vision_content_bn ?? 'গুণমান, অ্যাক্সেসযোগ্যতা এবং করুণাময় যত্নের মান নির্ধারণ করে এমন উদ্ভাবনী, রোগী-কেন্দ্রিক স্বাস্থ্যসেবা সমাধানের শীর্ষস্থানীয় প্রদানকারী হওয়া।') : ($missionVision?->vision_content_en ?? 'To become the leading provider of innovative, patient-centered healthcare solutions that set the standard for quality, accessibility, and compassionate care.') !!}</p>
+              <h2>{{ app()->getLocale() === 'bn' ? ($missionVision?->vision_heading_bn ?? 'আমাদের ভিশন') : ($missionVision?->vision_heading_en ?? 'Our Vision') }}</h2>
+              <p class="lead">{!! app()->getLocale() === 'bn' ? ($missionVision?->vision_content_bn ?? 'গুণমান, অ্যাক্সেসযোগ্যতা এবং করুণাময় যত্নের মান নির্ধারণ করে এমন উদ্ভাবনী, রোগী-কেন্দ্রিক স্বাস্থ্যসেবা সমাধানের শীর্ষস্থানীয় প্রদানকারী হওয়া।') : ($missionVision?->vision_content_en ?? 'To become the leading provider of innovative, patient-centered healthcare solutions that set the standard for quality, accessibility, and compassionate care.') !!}</p>
             </div>
           </div>
         </div>
@@ -144,9 +93,9 @@
 
         <div class="row justify-content-center" data-aos="fade-up">
           <div class="col-lg-8 text-center mb-5">
-            <h2 class="section-title">{{ $lang === 'bn' ? ($missionVision?->commitment_heading_bn ?? 'আমাদের প্রতিশ্রুতি') : ($missionVision?->commitment_heading_en ?? 'Our Commitment') }}</h2>
+            <h2 class="section-title">{{ app()->getLocale() === 'bn' ? ($missionVision?->commitment_heading_bn ?? 'আমাদের প্রতিশ্রুতি') : ($missionVision?->commitment_heading_en ?? 'Our Commitment') }}</h2>
             <p class="text-gray">
-              {{ $lang === 'bn' ? ($missionVision?->commitment_description_bn ?? 'আমরা অনন্যতা এবং উৎকর্ষতার জন্য প্রতিশ্রুতিবদ্ধ।') : ($missionVision?->commitment_description_en ?? 'We are committed to excellence and compassion.') }}
+              {{ app()->getLocale() === 'bn' ? ($missionVision?->commitment_description_bn ?? 'আমরা অনন্যতা এবং উৎকর্ষতার জন্য প্রতিশ্রুতিবদ্ধ।') : ($missionVision?->commitment_description_en ?? 'We are committed to excellence and compassion.') }}
             </p>
           </div>
         </div>
@@ -159,8 +108,8 @@
               $titleBn = $missionVision?->{'commitment_' . $i . '_title_bn'} ?? '';
               $descEn = $missionVision?->{'commitment_' . $i . '_description_en'} ?? '';
               $descBn = $missionVision?->{'commitment_' . $i . '_description_bn'} ?? '';
-              $title = $lang === 'bn' ? $titleBn : $titleEn;
-              $desc = $lang === 'bn' ? $descBn : $descEn;
+              $title = app()->getLocale() === 'bn' ? $titleBn : $titleEn;
+              $desc = app()->getLocale() === 'bn' ? $descBn : $descEn;
             @endphp
             @if ($title)
               <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="{{ $i * 100 }}">

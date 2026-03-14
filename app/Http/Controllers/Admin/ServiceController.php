@@ -34,16 +34,22 @@ class ServiceController extends Controller
         $validated = $request->validate([
             'title_en' => 'required|string|max:255',
             'title_bn' => 'nullable|string|max:255',
+            'short_description_en' => 'nullable|string|max:500',
+            'short_description_bn' => 'nullable|string|max:500',
             'description_en' => 'nullable|string',
             'description_bn' => 'nullable|string',
             'slug_en' => 'nullable|string|max:255',
             'slug_bn' => 'nullable|string|max:255',
             'banner' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'show_on_home' => 'nullable|boolean',
+            'order' => 'nullable|integer|min:0',
         ]);
 
         if ($request->hasFile('banner')) {
             $validated['banner'] = $request->file('banner')->store('services', 'public');
         }
+
+        $validated['show_on_home'] = $request->has('show_on_home') ? 1 : 0;
 
         Service::create($validated);
         return redirect()->route('admin.services.index')->with('success', 'Service created successfully!');
@@ -77,11 +83,15 @@ class ServiceController extends Controller
         $validated = $request->validate([
             'title_en' => 'required|string|max:255',
             'title_bn' => 'nullable|string|max:255',
+            'short_description_en' => 'nullable|string|max:500',
+            'short_description_bn' => 'nullable|string|max:500',
             'description_en' => 'nullable|string',
             'description_bn' => 'nullable|string',
             'slug_en' => 'nullable|string|max:255',
             'slug_bn' => 'nullable|string|max:255',
             'banner' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'show_on_home' => 'nullable|boolean',
+            'order' => 'nullable|integer|min:0',
         ]);
 
         if ($request->hasFile('banner')) {
@@ -91,6 +101,8 @@ class ServiceController extends Controller
             }
             $validated['banner'] = $request->file('banner')->store('services', 'public');
         }
+
+        $validated['show_on_home'] = $request->has('show_on_home') ? 1 : 0;
 
         $service->update($validated);
         return redirect()->route('admin.services.index')->with('success', 'Service updated successfully!');

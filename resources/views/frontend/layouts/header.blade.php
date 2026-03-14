@@ -9,7 +9,7 @@
         <div class="d-none d-md-flex align-items-center gap-4">
           <!-- Language Switcher Toggle -->
           <div class="language-toggle-wrapper">
-            <input type="checkbox" id="language-toggle" class="language-toggle-checkbox" 
+            <input type="checkbox" id="language-toggle" class="language-toggle-checkbox"
               {{ app()->getLocale() === 'bn' ? 'checked' : '' }}>
             <label for="language-toggle" class="language-toggle-label">
               <span class="toggle-text toggle-en">EN</span>
@@ -23,7 +23,7 @@
             <a href="{{ setting('social_facebook', '#!') }}" target="_blank" class="facebook"><i class="bi bi-facebook"></i></a>
             <a href="{{ setting('social_instagram', '#!') }}" target="_blank" class="instagram"><i class="bi bi-instagram"></i></a>
             <a href="{{ setting('social_linkedin', '#!') }}" target="_blank" class="linkedin"><i class="bi bi-linkedin"></i></a>
-            
+
         </div>
         </div>
       </div>
@@ -131,15 +131,22 @@
         .language-toggle-checkbox:checked ~ .language-toggle-label .toggle-slider {
           left: 52px;
         }
+
+        .sitename {
+          font-size: 14px !important;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
       }
     </style>
 
-    
+
 
     <script>
       document.addEventListener('DOMContentLoaded', function() {
         const toggle = document.getElementById('language-toggle');
-        
+
         toggle.addEventListener('change', function() {
           const locale = this.checked ? 'bn' : 'en';
           window.location.href = "{{ url('/language') }}/" + locale;
@@ -147,7 +154,7 @@
       });
     </script>
 
-    
+
 
     <div class="branding d-flex align-items-center">
 
@@ -159,15 +166,15 @@
 
         <nav id="navmenu" class="navmenu">
           <ul>
-            <li><a href="/" class="active">{{ __('messages.home')}}</a></li>
+            <li><a href="/" class="{{ request()->routeIs('home') ? 'active' : '' }}">{{ __('messages.home')}}</a></li>
             <li class="dropdown"><a href="#"><span>{{ __('messages.about_us') }}</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
               <ul>
-                <li><a href="{{ route('who-we-are') }}">{{ __('messages.who_we_are') }}</a></li>
-                <li><a href="{{ route('mission-and-vision') }}">{{ __('messages.mission_and_vision') }}</a></li>
+                <li><a href="{{ route('who-we-are') }}" class="{{ request()->routeIs('who-we-are') ? 'active' : '' }}">{{ __('messages.who_we_are') }}</a></li>
+                <li><a href="{{ route('mission-and-vision') }}" class="{{ request()->routeIs('mission-and-vision') ? 'active' : '' }}">{{ __('messages.mission_and_vision') }}</a></li>
               </ul>
             </li>
-            <li><a href="{{ route('services') }}">{{ __('messages.services') }}</a></li>
-            <li><a href="{{ route('contact') }}">{{ __('messages.contact_us') }}</a></li>
+            <li><a href="{{ route('services') }}" class="{{ request()->routeIs('services') ? 'active' : '' }}">{{ __('messages.services') }}</a></li>
+            <li><a href="{{ route('contact') }}" class="{{ request()->routeIs('contact') ? 'active' : '' }}">{{ __('messages.contact_us') }}</a></li>
           </ul>
           <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>

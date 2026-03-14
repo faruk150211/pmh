@@ -6,60 +6,11 @@
 
 @section('keywords', 'medical housecall, home healthcare, doctor at home, medical services, healthcare at home')
 
+@php
+use Illuminate\Support\Facades\Storage;
+@endphp
+
 @section('content')
-
-    <script>
-        // Get language from URL or localStorage
-        const urlParams = new URLSearchParams(window.location.search);
-        const langParam = urlParams.get('lang');
-        const savedLang = localStorage.getItem('language') || 'en';
-        const currentLang = langParam || savedLang;
-
-        // Store language preference
-        localStorage.setItem('language', currentLang);
-        document.documentElement.lang = currentLang;
-
-        // Function to convert English numerals to Bengali
-        function convertToBengaliNumerals(text) {
-            const bengaliMap = {
-                '0': '০', '1': '১', '2': '২', '3': '৩', '4': '৪',
-                '5': '৫', '6': '৬', '7': '৭', '8': '৮', '9': '৯'
-            };
-            return text.replace(/[0-9]/g, digit => bengaliMap[digit]);
-        }
-
-        // Convert purecounter values to Bengali if language is Bengali
-        if (currentLang === 'bn') {
-            // Wait for DOM to be ready and purecounter to initialize
-            document.addEventListener('DOMContentLoaded', function() {
-                // Convert existing purecounter values
-                const pureCounters = document.querySelectorAll('.purecounter');
-                pureCounters.forEach(counter => {
-                    // Watch for changes to the counter's text content
-                    const observer = new MutationObserver(function(mutations) {
-                        const text = counter.textContent;
-                        // Check if text contains numbers
-                        if (/[0-9]/.test(text)) {
-                            counter.textContent = convertToBengaliNumerals(text);
-                        }
-                    });
-                    observer.observe(counter, { childList: true, characterData: true, subtree: true });
-
-                    // Also check periodically for purecounter to finish animating
-                    let checkCount = 0;
-                    const interval = setInterval(() => {
-                        const text = counter.textContent;
-                        if (/[0-9]/.test(text) && !text.includes('০') && !text.includes('১')) {
-                            counter.textContent = convertToBengaliNumerals(text);
-                        }
-                        checkCount++;
-                        if (checkCount > 30) clearInterval(interval); // Stop after 3 seconds
-                    }, 100);
-                });
-            });
-        }
-    </script>
-
     <style>
         /* Ensure hero section appears below fixed header */
         #hero {
@@ -100,175 +51,87 @@
 
     <!-- Hero Section -->
     <section id="hero" class="hero section">
-
       <div class="container" data-aos="fade-up" data-aos-delay="100">
-
         <div class="row align-items-center">
           <div class="col-lg-6">
             <div class="hero-content">
-              <div class="trust-badges mb-4" data-aos="fade-right" data-aos-delay="200">
-                <div class="badge-item">
-                  <i class="bi bi-shield-check"></i>
-                  <span>{{ getTranslated($heroSection, 'badge_1') }}</span>
-                </div>
-                <div class="badge-item">
-                  <i class="bi bi-clock"></i>
-                  <span>{{ getTranslated($heroSection, 'badge_2') }}</span>
-                </div>
-                <div class="badge-item">
-                  <i class="bi bi-star-fill"></i>
-                  <span>{{ getTranslated($heroSection, 'badge_3') }}</span>
-                </div>
-              </div>
-
               <h1 data-aos="fade-right" data-aos-delay="300" class="hero-title">
-                {{ getTranslated($heroSection, 'title') ?? 'Excellence in Healthcare With Compassionate Care' }}
+                {{app()->getLocale() === 'bn' ? $heroSection->title_bn : $heroSection->title_en}}
               </h1>
-
               <p class="hero-description" data-aos="fade-right" data-aos-delay="400" lang="en-description">
-                {{ getTranslated($heroSection, 'description') ?? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.' }}
+                {{app()->getLocale() === 'bn' ? $heroSection->description_bn : $heroSection->description_en}}
               </p>
-
-              <div class="hero-stats mb-4" data-aos="fade-right" data-aos-delay="500">
-                <div class="stat-item">
-                  <h3><span data-purecounter-start="0" data-purecounter-end="{{ getLocalizedNumeral($heroSection, 'stat_1') }}" data-purecounter-duration="2"
-                      class="purecounter"></span>+</h3>
-                  <p class="stat-label-1">
-                    {{ getTranslated($heroSection, 'stat_1_label') }}
-                  </p>
-                </div>
-                <div class="stat-item">
-                  <h3><span data-purecounter-start="0" data-purecounter-end="{{ getLocalizedNumeral($heroSection, 'stat_2') }}" data-purecounter-duration="2"
-                      class="purecounter"></span>+</h3>
-                  <p class="stat-label-2">
-                    {{ getTranslated($heroSection, 'stat_2_label') }}
-                  </p>
-                </div>
-                <div class="stat-item">
-                  <h3><span data-purecounter-start="0" data-purecounter-end="{{ getLocalizedNumeral($heroSection, 'stat_3') }}" data-purecounter-duration="2"
-                      class="purecounter"></span>+</h3>
-                  <p class="stat-label-3">
-                    {{ getTranslated($heroSection, 'stat_3_label') }}
-                  </p>
-                </div>
-              </div>
-
-              {{-- <div class="hero-actions" data-aos="fade-right" data-aos-delay="600">
-                <a href="appointment.html" class="btn btn-primary">Book Appointment</a>
-                <a href="https://www.youtube.com/watch?v=Y7f98aduVJ8" class="btn btn-outline glightbox">
-                  <i class="bi bi-play-circle me-2"></i>
-                  Watch Our Story
-                </a>
-              </div> --}}
-
-              <div class="emergency-contact" data-aos="fade-right" data-aos-delay="700">
-                <div class="emergency-icon">
-                  <i class="bi bi-telephone-fill"></i>
-                </div>
-                <div class="emergency-info">
-                  <small>@if(request('lang') === 'bn')জরুরি হটলাইন @else Emergency Hotline @endif</small>
-                  <strong>{{ $heroSection->emergency_hotline ?? '+1 (555) 911-2468' }}</strong>
-                </div>
-              </div>
             </div>
           </div>
-
           <div class="col-lg-6">
             <div class="hero-visual" data-aos="fade-left" data-aos-delay="400">
               <div class="main-image">
                 <img src="{{ asset($heroSection->image ?? 'frontend/assets/img/health/staff-10.webp') }}" alt="Modern Healthcare Facility" class="img-fluid">
-                {{-- <div class="floating-card appointment-card">
-                  <div class="card-icon">
-                    <i class="bi bi-calendar-check"></i>
-                  </div>
-                  <div class="card-content">
-                    <h6>Next Available</h6>
-                    <p>Today 2:30 PM</p>
-                    <small>Dr. Sarah Johnson</small>
-                  </div>
-                </div> --}}
-                {{-- <div class="floating-card rating-card">
-                  <div class="card-content">
-                    <div class="rating-stars">
-                      <i class="bi bi-star-fill"></i>
-                      <i class="bi bi-star-fill"></i>
-                      <i class="bi bi-star-fill"></i>
-                      <i class="bi bi-star-fill"></i>
-                      <i class="bi bi-star-fill"></i>
-                    </div>
-                    <h6>4.9/5</h6>
-                    <small>1,234 Reviews</small>
-                  </div>
-                </div> --}}
-              </div>
-              <div class="background-elements">
-                <div class="element element-1"></div>
-                <div class="element element-2"></div>
-                <div class="element element-3"></div>
               </div>
             </div>
           </div>
         </div>
       </div>
-
-    </section><!-- /Hero Section -->
+    </section>
+    <!-- /Hero Section -->
 
     <!-- Problem Section -->
+    @if($problemSection)
     <section id="problem" class="problem section light-background">
-
       <div class="container" data-aos="fade-up" data-aos-delay="100">
-
         <div class="section-title" data-aos="fade-up">
-          <span class="section-badge">The Challenge</span>
-          <h2>Healthcare Should Not Feel Exhausting</h2>
-          <p>Many families experience difficulty accessing medical care:</p>
+          <span class="section-badge">{{ app()->getLocale() === 'bn' ? $problemSection->badge_bn : $problemSection->badge_en }}</span>
+          <h2>{{ app()->getLocale() === 'bn' ? $problemSection->title_bn : $problemSection->title_en }}</h2>
+          <p>{{ app()->getLocale() === 'bn' ? $problemSection->description_bn : $problemSection->description_en }}</p>
         </div>
-
         <div class="row g-4">
-
+          @if($problemSection->problem_1_title_en || $problemSection->problem_1_title_bn)
           <div class="col-lg-6 col-md-12" data-aos="fade-up" data-aos-delay="200">
             <div class="problem-card">
               <div class="problem-icon">
-                <i class="bi bi-hourglass-split"></i>
+                <i class="bi {{ $problemSection->problem_1_icon ?? 'bi-hourglass-split' }}"></i>
               </div>
-              <h4>Long Wait Times</h4>
-              <p>Emergency rooms and clinics mean hours of waiting. Your time is valuable, and illness shouldn't mean wasting your day in a waiting room.</p>
-              {{-- <div class="problem-stat"><span class="stat-number">3-5</span> <span class="stat-label">Hours Average Wait</span></div> --}}
+              <h4>{{ app()->getLocale() === 'bn' ? $problemSection->problem_1_title_bn : $problemSection->problem_1_title_en }}</h4>
+              <p>{{ app()->getLocale() === 'bn' ? $problemSection->problem_1_description_bn : $problemSection->problem_1_description_en }}</p>
             </div>
           </div>
+          @endif
 
+          @if($problemSection->problem_2_title_en || $problemSection->problem_2_title_bn)
           <div class="col-lg-6 col-md-12" data-aos="fade-up" data-aos-delay="300">
             <div class="problem-card">
               <div class="problem-icon">
-                <i class="bi bi-geo-alt"></i>
+                <i class="bi {{ $problemSection->problem_2_icon ?? 'bi-geo-alt' }}"></i>
               </div>
-              <h4>Inconvenient Locations</h4>
-              <p>Traveling to clinics, sometimes far from home, when you're sick or injured. Transportation becomes a challenge when you're not feeling well.</p>
-              {{-- <div class="problem-stat"><span class="stat-number">30+ min</span> <span class="stat-label">Average Travel Time</span></div> --}}
+              <h4>{{ app()->getLocale() === 'bn' ? $problemSection->problem_2_title_bn : $problemSection->problem_2_title_en }}</h4>
+              <p>{{ app()->getLocale() === 'bn' ? $problemSection->problem_2_description_bn : $problemSection->problem_2_description_en }}</p>
             </div>
           </div>
+          @endif
 
+          @if($problemSection->problem_3_title_en || $problemSection->problem_3_title_bn)
           <div class="col-lg-6 col-md-12" data-aos="fade-up" data-aos-delay="400">
             <div class="problem-card">
               <div class="problem-icon">
-                <i class="bi bi-virus"></i>
+                <i class="bi {{ $problemSection->problem_3_icon ?? 'bi-virus' }}"></i>
               </div>
-              <h4>Hospital-Acquired Infections</h4>
-              <p>Exposure to infections and disease in clinical settings. Treatment venues expose you to additional health risks you didn't have before.</p>
-              {{-- <div class="problem-stat"><span class="stat-number">1 in 31</span> <span class="stat-label">Hospital Patients Infected</span></div> --}}
+              <h4>{{ app()->getLocale() === 'bn' ? $problemSection->problem_3_title_bn : $problemSection->problem_3_title_en }}</h4>
+              <p>{{ app()->getLocale() === 'bn' ? $problemSection->problem_3_description_bn : $problemSection->problem_3_description_en }}</p>
             </div>
           </div>
+          @endif
 
+          @if($problemSection->problem_4_title_en || $problemSection->problem_4_title_bn)
           <div class="col-lg-6 col-md-12" data-aos="fade-up" data-aos-delay="500">
             <div class="problem-card">
               <div class="problem-icon">
-                <i class="bi bi-cash-coin"></i>
+                <i class="bi {{ $problemSection->problem_4_icon ?? 'bi-cash-coin' }}"></i>
               </div>
-              <h4>Difficulty Transporting Elderly Patients</h4>
-              <p>Hospital visits mean inflated costs and facility charges. Home-based care can reduce expenses while maintaining quality care.</p>
-              {{-- <div class="problem-stat"><span class="stat-number">60%</span> <span class="stat-label">Higher Facility Costs</span></div> --}}
+              <h4>{{ app()->getLocale() === 'bn' ? $problemSection->problem_4_title_bn : $problemSection->problem_4_title_en }}</h4>
+              <p>{{ app()->getLocale() === 'bn' ? $problemSection->problem_4_description_bn : $problemSection->problem_4_description_en }}</p>
             </div>
           </div>
+          @endif
 
         </div>
 
@@ -367,85 +230,226 @@
       </style>
 
     </section><!-- /Problem Section -->
+    @else
+    <!-- Problem Section - Fallback when no data in database -->
+    <section id="problem" class="problem section light-background">
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+        <div class="section-title" data-aos="fade-up">
+          <span class="section-badge">{{ __('problem-section.the-challenge')}}</span>
+          <h2>{{ __('problem-section.Healthcare') }}</h2>
+          <p>{{ __('problem-section.Many-families') }}</p>
+        </div>
+        <div class="row g-4">
+          <div class="col-lg-6 col-md-12" data-aos="fade-up" data-aos-delay="200">
+            <div class="problem-card">
+              <div class="problem-icon">
+                <i class="bi bi-hourglass-split"></i>
+              </div>
+              <h4>{{ __('problem-section.Long') }}</h4>
+              <p>{{ __('problem-section.Emergency') }}</p>
+            </div>
+          </div>
+
+          <div class="col-lg-6 col-md-12" data-aos="fade-up" data-aos-delay="300">
+            <div class="problem-card">
+              <div class="problem-icon">
+                <i class="bi bi-geo-alt"></i>
+              </div>
+              <h4>{{ __('problem-section.Inconvenient') }}</h4>
+              <p>{{ __('problem-section.Traveling') }}</p>
+            </div>
+          </div>
+
+          <div class="col-lg-6 col-md-12" data-aos="fade-up" data-aos-delay="400">
+            <div class="problem-card">
+              <div class="problem-icon">
+                <i class="bi bi-virus"></i>
+              </div>
+              <h4>{{ __('problem-section.Hospital') }}</h4>
+              <p>{{ __('problem-section.Exposure') }}</p>
+            </div>
+          </div>
+
+          <div class="col-lg-6 col-md-12" data-aos="fade-up" data-aos-delay="500">
+            <div class="problem-card">
+              <div class="problem-icon">
+                <i class="bi bi-cash-coin"></i>
+              </div>
+              <h4>{{ __('problem-section.Difficulty') }}</h4>
+              <p>{{ __('problem-section.Hospital-visits') }}</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <style>
+        .problem .section-badge {
+          display: inline-block;
+          background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+          color: white;
+          padding: 6px 16px;
+          border-radius: 25px;
+          font-size: 12px;
+          font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          margin-bottom: 1rem;
+        }
+
+        .problem .section-title h2 {
+          font-size: 2.5rem;
+          font-weight: 700;
+          margin-bottom: 1rem;
+          color: #1a1a1a;
+        }
+
+        .problem-card {
+          background: white;
+          padding: 2rem;
+          border-radius: 12px;
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+          transition: all 0.3s ease;
+          border-left: 4px solid #ff6b6b;
+        }
+
+        .problem-card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        .problem-icon {
+          width: 60px;
+          height: 60px;
+          background: linear-gradient(135deg, rgba(255, 107, 107, 0.2) 0%, rgba(238, 90, 111, 0.2) 100%);
+          border-radius: 12px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1.8rem;
+          color: #ff6b6b;
+          margin-bottom: 1.5rem;
+        }
+
+        .problem-card h4 {
+          font-size: 1.3rem;
+          font-weight: 600;
+          color: #1a1a1a;
+          margin-bottom: 0.8rem;
+        }
+
+        .problem-card p {
+          color: #666;
+          line-height: 1.6;
+          margin-bottom: 1.5rem;
+          font-size: 0.95rem;
+        }
+
+        @media (max-width: 768px) {
+          .problem .section-title h2 {
+            font-size: 1.8rem;
+          }
+          .problem-card {
+            margin-bottom: 1rem;
+          }
+        }
+      </style>
+
+    </section><!-- /Problem Section - Fallback -->
+    @endif
 
     <!-- Solution Section -->
+    @if($solutionSection)
     <section id="solution" class="solution section">
 
       <div class="container" data-aos="fade-up" data-aos-delay="100">
 
         <div class="section-title text-center" data-aos="fade-up">
-          <span class="section-badge">The Answer</span>
-          <h2>A Better Way to Receive Care</h2>
-          <p>PMH provides physician-led medical care in the comfort of your home</p>
+          <span class="section-badge">{{ app()->getLocale() === 'bn' ? $solutionSection->badge_bn : $solutionSection->badge_en }}</span>
+          <h2>{{ app()->getLocale() === 'bn' ? $solutionSection->title_bn : $solutionSection->title_en }}</h2>
+          <p>{{ app()->getLocale() === 'bn' ? $solutionSection->description_bn : $solutionSection->description_en }}</p>
         </div>
 
         <div class="row g-4">
 
           <!-- Solution 1: Same-Day Appointments -->
+          @if($solutionSection->solution_1_title_en || $solutionSection->solution_1_title_bn)
           <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
             <div class="solution-card">
               <div class="solution-icon">
-                <i class="bi bi-calendar2-check"></i>
+                <i class="bi {{ $solutionSection->solution_1_icon ?? 'bi-calendar2-check' }}"></i>
               </div>
-              <h4>Same-Day Appointments</h4>
-              <p>No waiting rooms. No scheduling nightmares. Get care within hours of your request, not weeks.</p>
+              <h4>{{ app()->getLocale() === 'bn' ? $solutionSection->solution_1_title_bn : $solutionSection->solution_1_title_en }}</h4>
+              <p>{{ app()->getLocale() === 'bn' ? $solutionSection->solution_1_description_bn : $solutionSection->solution_1_description_en }}</p>
             </div>
           </div>
+          @endif
 
           <!-- Solution 2: Care in Your Home -->
+          @if($solutionSection->solution_2_title_en || $solutionSection->solution_2_title_bn)
           <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
             <div class="solution-card">
               <div class="solution-icon">
-                <i class="bi bi-house-heart"></i>
+                <i class="bi {{ $solutionSection->solution_2_icon ?? 'bi-house-heart' }}"></i>
               </div>
-              <h4>Care in Your Home</h4>
-              <p>Comfortable, private consultation in your own space. Reduce stress and recovery time with familiar surroundings.</p>
+              <h4>{{ app()->getLocale() === 'bn' ? $solutionSection->solution_2_title_bn : $solutionSection->solution_2_title_en }}</h4>
+              <p>{{ app()->getLocale() === 'bn' ? $solutionSection->solution_2_description_bn : $solutionSection->solution_2_description_en }}</p>
             </div>
           </div>
+          @endif
 
           <!-- Solution 3: Infection-Free Environment -->
+          @if($solutionSection->solution_3_title_en || $solutionSection->solution_3_title_bn)
           <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
             <div class="solution-card">
               <div class="solution-icon">
-                <i class="bi bi-shield-check"></i>
+                <i class="bi {{ $solutionSection->solution_3_icon ?? 'bi-shield-check' }}"></i>
               </div>
-              <h4>Infection-Free Environment</h4>
-              <p>Sterile medical protocols in your home without exposure to hospital pathogens. Safe treatment for your entire family.</p>
+              <h4>{{ app()->getLocale() === 'bn' ? $solutionSection->solution_3_title_bn : $solutionSection->solution_3_title_en }}</h4>
+              <p>{{ app()->getLocale() === 'bn' ? $solutionSection->solution_3_description_bn : $solutionSection->solution_3_description_en }}</p>
             </div>
           </div>
+          @endif
 
           <!-- Solution 4: ECG and Monitoring -->
+          @if($solutionSection->solution_4_title_en || $solutionSection->solution_4_title_bn)
           <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="500">
             <div class="solution-card">
               <div class="solution-icon">
-                <i class="bi bi-activity"></i>
+                <i class="bi {{ $solutionSection->solution_4_icon ?? 'bi-activity' }}"></i>
               </div>
-              <h4>ECG and Monitoring</h4>
-              <p>Real-time cardiac monitoring and ECG testing performed at home with advanced portable equipment.</p>
+              <h4>{{ app()->getLocale() === 'bn' ? $solutionSection->solution_4_title_bn : $solutionSection->solution_4_title_en }}</h4>
+              <p>{{ app()->getLocale() === 'bn' ? $solutionSection->solution_4_description_bn : $solutionSection->solution_4_description_en }}</p>
             </div>
           </div>
+          @endif
 
           <!-- Solution 5: Point-of-Care Diagnostics -->
+          @if($solutionSection->solution_5_title_en || $solutionSection->solution_5_title_bn)
           <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="600">
             <div class="solution-card">
               <div class="solution-icon">
-                <i class="bi bi-microscope"></i>
+                <i class="bi {{ $solutionSection->solution_5_icon ?? 'bi-hospital' }}"></i>
               </div>
-              <h4>Point-of-Care Diagnostics</h4>
-              <p>Instant laboratory testing and diagnostic results without the need for clinic visits or lab delays.</p>
+              <h4>{{ app()->getLocale() === 'bn' ? $solutionSection->solution_5_title_bn : $solutionSection->solution_5_title_en }}</h4>
+              <p>{{ app()->getLocale() === 'bn' ? $solutionSection->solution_5_description_bn : $solutionSection->solution_5_description_en }}</p>
             </div>
           </div>
+          @endif
 
           <!-- Solution 6: Electronic Medical Record Documentation -->
+          @if($solutionSection->solution_6_title_en || $solutionSection->solution_6_title_bn)
           <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="700">
             <div class="solution-card">
               <div class="solution-icon">
-                <i class="bi bi-file-earmark-medical"></i>
+                <i class="bi {{ $solutionSection->solution_6_icon ?? 'bi-file-earmark-medical' }}"></i>
               </div>
-              <h4>Electronic Medical Records</h4>
-              <p>Comprehensive digital documentation and secure medical records accessible anytime from your account.</p>
+              <h4>{{ app()->getLocale() === 'bn' ? $solutionSection->solution_6_title_bn : $solutionSection->solution_6_title_en }}</h4>
+              <p>{{ app()->getLocale() === 'bn' ? $solutionSection->solution_6_description_bn : $solutionSection->solution_6_description_en }}</p>
             </div>
           </div>
+          @endif
 
         </div>
 
@@ -573,116 +577,131 @@
         }
       </style>
 
-    </section>
-    <!-- /Solution Section -->
-    <!-- Home About Section (Why Choose Us) -->
+    </section><!-- /Solution Section -->
+    @endif
+    <!-- Why Choose Us Section -->
+    @if($whyChooseUsSection)
     <section id="home-about" class="home-about section">
 
       <div class="container" data-aos="fade-up" data-aos-delay="100">
 
         <div class="section-title text-center" data-aos="fade-up">
-          <span class="section-badge">Why Choose Us</span>
-          <h2>Professional Medical Care <span class="highlight">Delivered to Your Door</span></h2>
+          <span class="section-badge">{{ app()->getLocale() === 'bn' ? $whyChooseUsSection->badge_bn : $whyChooseUsSection->badge_en }}</span>
+          <h2>{{ app()->getLocale() === 'bn' ? $whyChooseUsSection->title_bn : $whyChooseUsSection->title_en }}</h2>
         </div>
 
         <div class="about-content">
           <div class="features-grid">
+            @if($whyChooseUsSection->card_1_title_en || $whyChooseUsSection->card_1_title_bn)
             <div class="why-choose-card" data-aos="fade-up" data-aos-delay="200">
               <div class="card-header">
                 <div class="card-icon">
-                  <i class="bi bi-lightning-charge"></i>
+                  <i class="bi {{ $whyChooseUsSection->card_1_icon ?? 'bi-lightning-charge' }}"></i>
                 </div>
               </div>
               <div class="card-body">
-                <h4>Rapid Response</h4>
-                <p>No waiting rooms. No delays. Immediate professional medical attention at your convenience.</p>
+                <h4>{{ app()->getLocale() === 'bn' ? $whyChooseUsSection->card_1_title_bn : $whyChooseUsSection->card_1_title_en }}</h4>
+                <p>{{ app()->getLocale() === 'bn' ? $whyChooseUsSection->card_1_description_bn : $whyChooseUsSection->card_1_description_en }}</p>
               </div>
               <div class="card-footer">
                 <span class="badge-number">01</span>
               </div>
             </div>
+            @endif
 
+            @if($whyChooseUsSection->card_2_title_en || $whyChooseUsSection->card_2_title_bn)
             <div class="why-choose-card" data-aos="fade-up" data-aos-delay="300">
               <div class="card-header">
                 <div class="card-icon">
-                  <i class="bi bi-people-check"></i>
+                  <i class="bi {{ $whyChooseUsSection->card_2_icon ?? 'bi-people-check' }}"></i>
                 </div>
               </div>
               <div class="card-body">
-                <h4>Experienced Team</h4>
-                <p>Board-certified physicians and highly trained medical professionals with extensive clinical expertise.</p>
+                <h4>{{ app()->getLocale() === 'bn' ? $whyChooseUsSection->card_2_title_bn : $whyChooseUsSection->card_2_title_en }}</h4>
+                <p>{{ app()->getLocale() === 'bn' ? $whyChooseUsSection->card_2_description_bn : $whyChooseUsSection->card_2_description_en }}</p>
               </div>
               <div class="card-footer">
                 <span class="badge-number">02</span>
               </div>
             </div>
+            @endif
 
+            @if($whyChooseUsSection->card_3_title_en || $whyChooseUsSection->card_3_title_bn)
             <div class="why-choose-card" data-aos="fade-up" data-aos-delay="400">
               <div class="card-header">
                 <div class="card-icon">
-                  <i class="bi bi-shield-exclamation"></i>
+                  <i class="bi {{ $whyChooseUsSection->card_3_icon ?? 'bi-shield-exclamation' }}"></i>
                 </div>
               </div>
               <div class="card-body">
-                <h4>Advanced Equipment</h4>
-                <p>State-of-the-art mobile medical technology ensures diagnostic accuracy and treatment quality.</p>
+                <h4>{{ app()->getLocale() === 'bn' ? $whyChooseUsSection->card_3_title_bn : $whyChooseUsSection->card_3_title_en }}</h4>
+                <p>{{ app()->getLocale() === 'bn' ? $whyChooseUsSection->card_3_description_bn : $whyChooseUsSection->card_3_description_en }}</p>
               </div>
               <div class="card-footer">
                 <span class="badge-number">03</span>
               </div>
             </div>
+            @endif
 
+            @if($whyChooseUsSection->card_4_title_en || $whyChooseUsSection->card_4_title_bn)
             <div class="why-choose-card" data-aos="fade-up" data-aos-delay="500">
               <div class="card-header">
                 <div class="card-icon">
-                  <i class="bi bi-clock-history"></i>
+                  <i class="bi {{ $whyChooseUsSection->card_4_icon ?? 'bi-clock-history' }}"></i>
                 </div>
               </div>
               <div class="card-body">
-                <h4>24/7 Availability</h4>
-                <p>Always ready. Round-the-clock emergency services and scheduled visits on your preferred schedule.</p>
+                <h4>{{ app()->getLocale() === 'bn' ? $whyChooseUsSection->card_4_title_bn : $whyChooseUsSection->card_4_title_en }}</h4>
+                <p>{{ app()->getLocale() === 'bn' ? $whyChooseUsSection->card_4_description_bn : $whyChooseUsSection->card_4_description_en }}</p>
               </div>
               <div class="card-footer">
                 <span class="badge-number">04</span>
               </div>
             </div>
+            @endif
           </div>
 
           <div class="stats-section mt-5">
             <div class="stats-row">
+              @if($whyChooseUsSection->stat_1_number || $whyChooseUsSection->stat_1_label_en || $whyChooseUsSection->stat_1_label_bn)
               <div class="stat-box" data-aos="zoom-in" data-aos-delay="200">
                 <div class="stat-content">
-                  <div class="stat-number purecounter" data-purecounter-start="0" data-purecounter-end="15000"
+                  <div class="stat-number purecounter" data-purecounter-start="0" data-purecounter-end="{{ $whyChooseUsSection->stat_1_number ?? 15000 }}"
                     data-purecounter-duration="2"></div>
-                  <div class="stat-label">Patients Served</div>
+                  <div class="stat-label">{{ app()->getLocale() === 'bn' ? $whyChooseUsSection->stat_1_label_bn : $whyChooseUsSection->stat_1_label_en }}</div>
                 </div>
               </div>
+              @endif
 
+              @if($whyChooseUsSection->stat_2_number || $whyChooseUsSection->stat_2_label_en || $whyChooseUsSection->stat_2_label_bn)
               <div class="stat-box" data-aos="zoom-in" data-aos-delay="300">
                 <div class="stat-content">
-                  <div class="stat-number purecounter" data-purecounter-start="0" data-purecounter-end="25"
+                  <div class="stat-number purecounter" data-purecounter-start="0" data-purecounter-end="{{ $whyChooseUsSection->stat_2_number ?? 25 }}"
                     data-purecounter-duration="2"></div>
-                  <div class="stat-label">Years of Experience</div>
+                  <div class="stat-label">{{ app()->getLocale() === 'bn' ? $whyChooseUsSection->stat_2_label_bn : $whyChooseUsSection->stat_2_label_en }}</div>
                 </div>
               </div>
+              @endif
 
+              @if($whyChooseUsSection->stat_3_number || $whyChooseUsSection->stat_3_label_en || $whyChooseUsSection->stat_3_label_bn)
               <div class="stat-box" data-aos="zoom-in" data-aos-delay="400">
                 <div class="stat-content">
-                  <div class="stat-number purecounter" data-purecounter-start="0" data-purecounter-end="50"
+                  <div class="stat-number purecounter" data-purecounter-start="0" data-purecounter-end="{{ $whyChooseUsSection->stat_3_number ?? 50 }}"
                     data-purecounter-duration="2"></div>
-                  <div class="stat-label">Medical Specialists</div>
+                  <div class="stat-label">{{ app()->getLocale() === 'bn' ? $whyChooseUsSection->stat_3_label_bn : $whyChooseUsSection->stat_3_label_en }}</div>
                 </div>
               </div>
+              @endif
             </div>
           </div>
 
           <div class="cta-section mt-5 pt-3" data-aos="fade-up" data-aos-delay="600">
-            <a href="{{ route('contact', ['lang' => getCurrentLanguage()]) }}" class="btn-primary btn-lg">
+            <a href="{{ route('contact') }}" class="btn-primary btn-lg">
               <i class="bi bi-phone-fill me-2"></i>
-              Schedule Your Visit Today
+              {{app()->getLocale() === 'bn' ? 'যোগাযোগ করুন' : 'Schedule Your Visit Today'}}
             </a>
-            <a href="{{ route('who-we-are', ['lang' => getCurrentLanguage()]) }}" class="btn-outline">
-              Learn More About Us
+            <a href="{{ route('who-we-are') }}" class="btn-outline">
+                {{app()->getLocale() === 'bn' ? 'আরও জানুন' : 'Learn More About Us'}}
             </a>
           </div>
         </div>
@@ -995,7 +1014,8 @@
       </style>
 
     </section>
-    <!-- /Home About Section -->
+    @endif
+    <!-- /Why Choose Us Section -->
 
     <!-- Service Section -->
     <section id="services" class="services section">
@@ -1003,79 +1023,98 @@
       <div class="container" data-aos="fade-up" data-aos-delay="100">
 
         <div class="section-title text-center" data-aos="fade-up">
-          <span class="section-badge">Our Services</span>
-          <h2>Our Medical Services</h2>
-          <p>Comprehensive healthcare delivered to your doorstep</p>
+          <span class="section-badge">{{ app()->getLocale() === 'bn' ? 'আমাদের সেবা' : 'Our Services' }}</span>
+          <h2>{{ app()->getLocale() === 'bn' ? 'আমাদের মেডিকেল সেবামুহ' : 'Our Medical Services' }}</h2>
+          <p>{{ app()->getLocale() === 'bn' ? 'আমাদের মেডিকেল সেবা আপনার ডাক্তারের সাথে আপনার ঘরে পৌঁছে যায়' : 'Our medical services come to your doorstep with your doctor' }}</p>
         </div>
 
         <div class="row g-4">
-
-          <!-- Service 1: Doctor Home Visit -->
-          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-            <div class="service-card">
-              <div class="service-icon">
-                <i class="bi bi-person-check"></i>
+          @if($services && $services->count() > 0)
+            @php
+              $aosDelay = 200;
+            @endphp
+            @foreach($services as $service)
+              <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="{{ $aosDelay }}">
+                <div class="service-card">
+                  <div class="service-icon">
+                    <i class="bi bi-person-check"></i>
+                  </div>
+                  <h4>{{ app()->getLocale() === 'bn' ? ($service->title_bn ?? $service->title_en) : $service->title_en }}</h4>
+                  <p>{{ app()->getLocale() === 'bn' ? ($service->short_description_bn ?? $service->description_bn) : ($service->short_description_en ?? $service->description_en) }}</p>
+                </div>
               </div>
-              <h4>Doctor Home Visit</h4>
-              <p>Professional physician visit directly to your home with complete medical evaluation.</p>
-            </div>
-          </div>
-
-          <!-- Service 2: Bedside Diagnostics -->
-          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
-            <div class="service-card">
-              <div class="service-icon">
-                <i class="bi bi-hospital"></i>
+              @php
+                $aosDelay += 100;
+              @endphp
+            @endforeach
+          @else
+            <!-- Fallback Hardcoded Services -->
+            <!-- Service 1: Doctor Home Visit -->
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+              <div class="service-card">
+                <div class="service-icon">
+                  <i class="bi bi-person-check"></i>
+                </div>
+                <h4>Doctor Home Visit</h4>
+                <p>Professional physician visit directly to your home with complete medical evaluation.</p>
               </div>
-              <h4>Bedside Diagnostics</h4>
-              <p>Essential medical tests performed at home for quick and accurate diagnosis.</p>
             </div>
-          </div>
 
-          <!-- Service 3: Home Treatment -->
-          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
-            <div class="service-card">
-              <div class="service-icon">
-                <i class="bi bi-bandaid"></i>
+            <!-- Service 2: Bedside Diagnostics -->
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+              <div class="service-card">
+                <div class="service-icon">
+                  <i class="bi bi-hospital"></i>
+                </div>
+                <h4>Bedside Diagnostics</h4>
+                <p>Essential medical tests performed at home for quick and accurate diagnosis.</p>
               </div>
-              <h4>Home Treatment</h4>
-              <p>Minor procedures and treatments without the need for hospital visit.</p>
             </div>
-          </div>
 
-          <!-- Service 4: Medication Support -->
-          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="500">
-            <div class="service-card">
-              <div class="service-icon">
-                <i class="bi bi-capsule"></i>
+            <!-- Service 3: Home Treatment -->
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
+              <div class="service-card">
+                <div class="service-icon">
+                  <i class="bi bi-bandaid"></i>
+                </div>
+                <h4>Home Treatment</h4>
+                <p>Minor procedures and treatments without the need for hospital visit.</p>
               </div>
-              <h4>Medication Support</h4>
-              <p>Expert medication guidance and management tailored to your health needs.</p>
             </div>
-          </div>
 
-          <!-- Service 5: Elderly Care -->
-          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="600">
-            <div class="service-card">
-              <div class="service-icon">
-                <i class="bi bi-heart-pulse"></i>
+            <!-- Service 4: Medication Support -->
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="500">
+              <div class="service-card">
+                <div class="service-icon">
+                  <i class="bi bi-capsule"></i>
+                </div>
+                <h4>Medication Support</h4>
+                <p>Expert medication guidance and management tailored to your health needs.</p>
               </div>
-              <h4>Elderly Care</h4>
-              <p>Specialized medical care designed specifically for senior patients.</p>
             </div>
-          </div>
 
-          <!-- Service 6: Follow-up Visits -->
-          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="700">
-            <div class="service-card">
-              <div class="service-icon">
-                <i class="bi bi-calendar-check"></i>
+            <!-- Service 5: Elderly Care -->
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="600">
+              <div class="service-card">
+                <div class="service-icon">
+                  <i class="bi bi-heart-pulse"></i>
+                </div>
+                <h4>Elderly Care</h4>
+                <p>Specialized medical care designed specifically for senior patients.</p>
               </div>
-              <h4>Follow-up Visits</h4>
-              <p>Ongoing treatment and monitoring to ensure optimal health recovery.</p>
             </div>
-          </div>
 
+            <!-- Service 6: Follow-up Visits -->
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="700">
+              <div class="service-card">
+                <div class="service-icon">
+                  <i class="bi bi-calendar-check"></i>
+                </div>
+                <h4>Follow-up Visits</h4>
+                <p>Ongoing treatment and monitoring to ensure optimal health recovery.</p>
+              </div>
+            </div>
+          @endif
         </div>
 
       </div>
@@ -1206,77 +1245,86 @@
     <!-- End of Service Section -->
 
     <!-- How It Works Section -->
+    @if($howItWorksSection)
     <section id="how-it-works" class="how-it-works section light-background">
 
       <div class="container" data-aos="fade-up" data-aos-delay="100">
 
         <div class="section-title" data-aos="fade-up">
-          <span class="section-badge">Simple Process</span>
-          <h2>How to Get Care in 4 Steps</h2>
-          <p>From booking to recovery - streamlined for your convenience</p>
+          <span class="section-badge">{{ app()->getLocale() === 'bn' ? $howItWorksSection->badge_bn : $howItWorksSection->badge_en }}</span>
+          <h2>{{ app()->getLocale() === 'bn' ? $howItWorksSection->title_bn : $howItWorksSection->title_en }}</h2>
+          <p>{{ app()->getLocale() === 'bn' ? $howItWorksSection->description_bn : $howItWorksSection->description_en }}</p>
         </div>
 
         <div class="row g-4">
 
+          @if($howItWorksSection->step_1_title_en || $howItWorksSection->step_1_title_bn)
           <div class="col-lg-6 col-md-12" data-aos="fade-up" data-aos-delay="200">
             <div class="process-card">
               <div class="process-step">
                 <div class="step-number">1</div>
               </div>
-              <h4>Request Appointment</h4>
-              <p>Call us or use our online booking system. Tell us your symptoms and preferred time. We'll find an available slot within hours.</p>
+              <h4>{{ app()->getLocale() === 'bn' ? $howItWorksSection->step_1_title_bn : $howItWorksSection->step_1_title_en }}</h4>
+              <p>{{ app()->getLocale() === 'bn' ? $howItWorksSection->step_1_description_bn : $howItWorksSection->step_1_description_en }}</p>
               <div class="process-icon">
-                <i class="bi bi-calendar-check"></i>
+                <i class="bi {{ $howItWorksSection->step_1_icon ?? 'bi-calendar-check' }}"></i>
               </div>
             </div>
           </div>
+          @endif
 
+          @if($howItWorksSection->step_2_title_en || $howItWorksSection->step_2_title_bn)
           <div class="col-lg-6 col-md-12" data-aos="fade-up" data-aos-delay="300">
             <div class="process-card">
               <div class="process-step">
                 <div class="step-number">2</div>
               </div>
-              <h4>Doctor Confirmation</h4>
-              <p>Our qualified physicians review your case and confirm the appointment. You'll receive a confirmation call and visit details.</p>
+              <h4>{{ app()->getLocale() === 'bn' ? $howItWorksSection->step_2_title_bn : $howItWorksSection->step_2_title_en }}</h4>
+              <p>{{ app()->getLocale() === 'bn' ? $howItWorksSection->step_2_description_bn : $howItWorksSection->step_2_description_en }}</p>
               <div class="process-icon">
-                <i class="bi bi-person-check"></i>
+                <i class="bi {{ $howItWorksSection->step_2_icon ?? 'bi-person-check' }}"></i>
               </div>
             </div>
           </div>
+          @endif
 
+          @if($howItWorksSection->step_3_title_en || $howItWorksSection->step_3_title_bn)
           <div class="col-lg-6 col-md-12" data-aos="fade-up" data-aos-delay="400">
             <div class="process-card">
               <div class="process-step">
                 <div class="step-number">3</div>
               </div>
-              <h4>Doctor at Your Door</h4>
-              <p>Your doctor arrives on time with complete medical equipment. Comfortable, private consultation in your home.</p>
+              <h4>{{ app()->getLocale() === 'bn' ? $howItWorksSection->step_3_title_bn : $howItWorksSection->step_3_title_en }}</h4>
+              <p>{{ app()->getLocale() === 'bn' ? $howItWorksSection->step_3_description_bn : $howItWorksSection->step_3_description_en }}</p>
               <div class="process-icon">
-                <i class="bi bi-door-open"></i>
+                <i class="bi {{ $howItWorksSection->step_3_icon ?? 'bi-door-open' }}"></i>
               </div>
             </div>
           </div>
+          @endif
 
+          @if($howItWorksSection->step_4_title_en || $howItWorksSection->step_4_title_bn)
           <div class="col-lg-6 col-md-12" data-aos="fade-up" data-aos-delay="500">
             <div class="process-card">
               <div class="process-step">
                 <div class="step-number">4</div>
               </div>
-              <h4>Follow-up Care</h4>
-              <p>Prescription and medical records sent digitally. We follow up to ensure you're recovering well and support your ongoing care.</p>
+              <h4>{{ app()->getLocale() === 'bn' ? $howItWorksSection->step_4_title_bn : $howItWorksSection->step_4_title_en }}</h4>
+              <p>{{ app()->getLocale() === 'bn' ? $howItWorksSection->step_4_description_bn : $howItWorksSection->step_4_description_en }}</p>
               <div class="process-icon">
-                <i class="bi bi-file-medical"></i>
+                <i class="bi {{ $howItWorksSection->step_4_icon ?? 'bi-file-medical' }}"></i>
               </div>
             </div>
           </div>
+          @endif
 
         </div>
 
         <div class="row mt-5">
           <div class="col-12 text-center">
-            <a href="{{ route('contact', ['lang' => getCurrentLanguage()]) }}" class="btn btn-primary btn-lg" data-aos="fade-up" data-aos-delay="600">
+            <a href="{{ route('contact') }}" class="btn btn-primary btn-lg" data-aos="fade-up" data-aos-delay="600">
               <i class="bi bi-phone-fill me-2"></i>
-              Book Your Appointment Now
+              {{ app()->getLocale() === 'bn' ? 'আজই আপনার ভিজিট নির্ধারণ করুন' : 'Book Your Appointment Now' }}
             </a>
           </div>
         </div>
@@ -1367,272 +1415,51 @@
         }
       </style>
 
-    </section><!-- /How It Works Section -->
-
-    <!-- Find A Doctor Section -->
-    <section id="find-a-doctor" class="find-a-doctor section" style="display: none;">
-
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Find A Doctor</h2>
-        <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
-      </div><!-- End Section Title -->
-
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-        <div class="row justify-content-center mb-5" data-aos="fade-up" data-aos-delay="200">
-          <div class="col-lg-8 text-center">
-            <div class="search-section">
-              <h3 class="search-title">Find Your Perfect Healthcare Provider</h3>
-              <p class="search-subtitle">Search through our comprehensive directory of experienced medical professionals
-              </p>
-              <form class="search-form" action="#!" method="#">
-                <div class="search-input-group">
-                  <div class="input-wrapper">
-                    <i class="bi bi-person"></i>
-                    <input type="text" class="form-control" name="doctor_name" placeholder="Enter doctor name">
-                  </div>
-                  <div class="select-wrapper">
-                    <i class="bi bi-heart-pulse"></i>
-                    <select class="form-select" name="specialty">
-                      <option value="">All Specialties</option>
-                      <option value="cardiology">Cardiology</option>
-                      <option value="neurology">Neurology</option>
-                      <option value="orthopedics">Orthopedics</option>
-                      <option value="pediatrics">Pediatrics</option>
-                      <option value="dermatology">Dermatology</option>
-                      <option value="oncology">Oncology</option>
-                    </select>
-                  </div>
-                  <button type="submit" class="search-btn">
-                    <i class="bi bi-search"></i>
-                    Find Doctors
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-
-        <div class="doctors-grid" data-aos="fade-up" data-aos-delay="300">
-          <div class="doctor-profile" data-aos="zoom-in" data-aos-delay="100">
-            <div class="profile-header">
-              <div class="doctor-avatar">
-                <img src="{{ asset('frontend/assets/img/health/staff-2.webp') }}" alt="Dr. Amanda Foster" class="img-fluid">
-                <div class="status-indicator available"></div>
-              </div>
-              <div class="doctor-details">
-                <h4>Dr. Amanda Foster</h4>
-                <span class="specialty-tag">Cardiology Specialist</span>
-                <div class="experience-info">
-                  <i class="bi bi-award"></i>
-                  <span>14 years experience</span>
-                </div>
-              </div>
-            </div>
-            <div class="rating-section">
-              <div class="stars">
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-              </div>
-              <span class="rating-score">4.9</span>
-              <span class="review-count">(127 reviews)</span>
-            </div>
-            <div class="action-buttons">
-              <a href="#!" class="btn-secondary">View Details</a>
-              <a href="#!" class="btn-primary">Book Now</a>
-            </div>
-          </div><!-- End Doctor Profile -->
-
-          <div class="doctor-profile" data-aos="zoom-in" data-aos-delay="200">
-            <div class="profile-header">
-              <div class="doctor-avatar">
-                <img src="{{ asset('frontend/assets/img/health/staff-6.webp') }}" alt="Dr. Marcus Johnson" class="img-fluid">
-                <div class="status-indicator busy"></div>
-              </div>
-              <div class="doctor-details">
-                <h4>Dr. Marcus Johnson</h4>
-                <span class="specialty-tag">Neurology Expert</span>
-                <div class="experience-info">
-                  <i class="bi bi-award"></i>
-                  <span>16 years experience</span>
-                </div>
-              </div>
-            </div>
-            <div class="rating-section">
-              <div class="stars">
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-half"></i>
-              </div>
-              <span class="rating-score">4.8</span>
-              <span class="review-count">(89 reviews)</span>
-            </div>
-            <div class="action-buttons">
-              <a href="#!" class="btn-secondary">View Details</a>
-              <a href="#!" class="btn-primary">Schedule</a>
-            </div>
-          </div><!-- End Doctor Profile -->
-
-          <div class="doctor-profile" data-aos="zoom-in" data-aos-delay="300">
-            <div class="profile-header">
-              <div class="doctor-avatar">
-                <img src="{{ asset('frontend/assets/img/health/staff-4.webp') }}" alt="Dr. Rachel Williams" class="img-fluid">
-                <div class="status-indicator available"></div>
-              </div>
-              <div class="doctor-details">
-                <h4>Dr. Rachel Williams</h4>
-                <span class="specialty-tag">Pediatrics Care</span>
-                <div class="experience-info">
-                  <i class="bi bi-award"></i>
-                  <span>11 years experience</span>
-                </div>
-              </div>
-            </div>
-            <div class="rating-section">
-              <div class="stars">
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-              </div>
-              <span class="rating-score">5.0</span>
-              <span class="review-count">(203 reviews)</span>
-            </div>
-            <div class="action-buttons">
-              <a href="#!" class="btn-secondary">View Details</a>
-              <a href="#!" class="btn-primary">Book Now</a>
-            </div>
-          </div><!-- End Doctor Profile -->
-
-          <div class="doctor-profile" data-aos="zoom-in" data-aos-delay="400">
-            <div class="profile-header">
-              <div class="doctor-avatar">
-                <img src="{{ asset('frontend/assets/img/health/staff-8.webp') }}" alt="Dr. David Chen" class="img-fluid">
-                <div class="status-indicator offline"></div>
-              </div>
-              <div class="doctor-details">
-                <h4>Dr. David Chen</h4>
-                <span class="specialty-tag">Orthopedic Surgery</span>
-                <div class="experience-info">
-                  <i class="bi bi-award"></i>
-                  <span>22 years experience</span>
-                </div>
-              </div>
-            </div>
-            <div class="rating-section">
-              <div class="stars">
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-half"></i>
-              </div>
-              <span class="rating-score">4.7</span>
-              <span class="review-count">(156 reviews)</span>
-            </div>
-            <div class="action-buttons">
-              <a href="#!" class="btn-secondary">View Details</a>
-              <a href="#!" class="btn-primary">Schedule</a>
-            </div>
-          </div><!-- End Doctor Profile -->
-
-          <div class="doctor-profile" data-aos="zoom-in" data-aos-delay="500">
-            <div class="profile-header">
-              <div class="doctor-avatar">
-                <img src="{{ asset('frontend/assets/img/health/staff-11.webp') }}" alt="Dr. Victoria Torres" class="img-fluid">
-                <div class="status-indicator available"></div>
-              </div>
-              <div class="doctor-details">
-                <h4>Dr. Victoria Torres</h4>
-                <span class="specialty-tag">Dermatology Care</span>
-                <div class="experience-info">
-                  <i class="bi bi-award"></i>
-                  <span>9 years experience</span>
-                </div>
-              </div>
-            </div>
-            <div class="rating-section">
-              <div class="stars">
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star"></i>
-              </div>
-              <span class="rating-score">4.5</span>
-              <span class="review-count">(74 reviews)</span>
-            </div>
-            <div class="action-buttons">
-              <a href="#!" class="btn-secondary">View Details</a>
-              <a href="#!" class="btn-primary">Book Now</a>
-            </div>
-          </div><!-- End Doctor Profile -->
-
-          <div class="doctor-profile" data-aos="zoom-in" data-aos-delay="600">
-            <div class="profile-header">
-              <div class="doctor-avatar">
-                <img src="{{ asset('frontend/assets/img/health/staff-14.webp') }}" alt="Dr. Benjamin Lee" class="img-fluid">
-                <div class="status-indicator available"></div>
-              </div>
-              <div class="doctor-details">
-                <h4>Dr. Benjamin Lee</h4>
-                <span class="specialty-tag">Oncology Treatment</span>
-                <div class="experience-info">
-                  <i class="bi bi-award"></i>
-                  <span>19 years experience</span>
-                </div>
-              </div>
-            </div>
-            <div class="rating-section">
-              <div class="stars">
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-              </div>
-              <span class="rating-score">4.9</span>
-              <span class="review-count">(194 reviews)</span>
-            </div>
-            <div class="action-buttons">
-              <a href="#!" class="btn-secondary">View Details</a>
-              <a href="#!" class="btn-primary">Schedule</a>
-            </div>
-          </div><!-- End Doctor Profile -->
-
-        </div>
-
-        <div class="text-center mt-5" data-aos="fade-up" data-aos-delay="700">
-          <a href="doctors.html" class="btn-view-all">
-            View All Doctors
-            <i class="bi bi-arrow-right"></i>
-          </a>
-        </div>
-
-      </div>
-
-    </section><!-- /Find A Doctor Section -->
+    </section>
+    @endif
+    <!-- /How It Works Section -->
 
     <!-- Testimonials Section -->
     <section id="testimonials" class="testimonials section">
-
       <div class="container" data-aos="fade-up" data-aos-delay="100">
-
         <div class="section-title" data-aos="fade-up">
-          <span class="section-badge">Patient Stories</span>
-          <h2>What Our Patients Say</h2>
-          <p>Real experiences from people who chose Premier Medical Housecall</p>
+          <span class="section-badge">{{ app()->getLocale() === 'bn' ? 'রোগীদের মতামত' : 'Patient Stories' }}</span>
+          <h2>{{ app()->getLocale() === 'bn' ? 'আমাদের রোগীরা কি বলেন' : 'What Our Patients Say' }}</h2>
+          <p>{{ app()->getLocale() === 'bn' ? 'প্রিমিয়ার মেডিকেল হাউসকল বেছে নেওয়া মানুষদের বাস্তব অভিজ্ঞতা' : 'Real experiences from people who chose Premier Medical Housecall' }}</p>
         </div>
-
         <div class="row g-4">
-
+          @forelse($testimonials as $index => $testimonial)
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="{{ 200 + ($index * 100) }}">
+            <div class="testimonial-card">
+              <div class="stars">
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill"></i>
+              </div>
+              <p class="testimonial-text">
+                "{{ app()->getLocale() === 'bn' ? $testimonial->content_bn : $testimonial->content_en }}"
+              </p>
+              <div class="testimonial-author">
+                <div class="author-avatar">
+                  @if($testimonial->picture)
+                    <img src="{{ asset($testimonial->picture) }}" alt="{{ app()->getLocale() === 'bn' ? $testimonial->author_bn : $testimonial->author_en }}">
+                  @else
+                    <div class="avatar-placeholder">
+                      <i class="bi bi-person-circle"></i>
+                    </div>
+                  @endif
+                </div>
+                <div class="author-info">
+                  <h5>{{ app()->getLocale() === 'bn' ? $testimonial->author_bn : $testimonial->author_en }}</h5>
+                  <small>{{ app()->getLocale() === 'bn' ? 'যাচাইকৃত রোগী' : 'Verified Patient' }}</small>
+                </div>
+              </div>
+            </div>
+          </div>
+          @empty
+          <!-- Fallback testimonials if no database records exist -->
           <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
             <div class="testimonial-card">
               <div class="stars">
@@ -1676,7 +1503,6 @@
               </div>
             </div>
           </div>
-
           <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
             <div class="testimonial-card">
               <div class="stars">
@@ -1698,9 +1524,9 @@
               </div>
             </div>
           </div>
+          @endforelse
         </div>
       </div>
-
       <style>
         .testimonials .section-badge {
           display: inline-block;
@@ -1775,6 +1601,18 @@
           object-fit: cover;
         }
 
+        .avatar-placeholder {
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 2rem;
+          color: white;
+        }
+
         .author-info h5 {
           font-size: 0.95rem;
           font-weight: 600;
@@ -1817,8 +1655,8 @@
           }
         }
       </style>
-
-    </section><!-- /Testimonials Section -->
+    </section>
+    <!-- /Testimonials Section -->
 
     <!-- About the Founder Section -->
     <section id="about-founder" class="about-founder section">
@@ -1826,20 +1664,20 @@
       <div class="container" data-aos="fade-up" data-aos-delay="100">
 
         <div class="section-title text-center" data-aos="fade-up">
-          <h2>About the Founder</h2>
-          <p class="founder-subtitle">Medical Leadership with Purpose</p>
+          <h2>{{ app()->getLocale() === 'bn' ? ($founder->title_bn ?? 'About the Founder') : ($founder->title_en ?? 'About the Founder') }}</h2>
+          <p class="founder-subtitle">{{ app()->getLocale() === 'bn' ? ($founder->subtitle_bn ?? 'Medical Leadership with Purpose') : ($founder->subtitle_en ?? 'Medical Leadership with Purpose') }}</p>
         </div>
 
         <div class="row align-items-center g-5">
 
           <div class="col-lg-6" data-aos="fade-right" data-aos-delay="200">
             <div class="founder-quote-box">
-              <p class="founder-quote">❝ Healthcare should be timely, structured, dignified, and accessible — especially when patients are most vulnerable. ❞</p>
+              <p class="founder-quote">❝ {{ app()->getLocale() === 'bn' ? ($founder->quote_bn ?? 'Healthcare should be timely, structured, dignified, and accessible — especially when patients are most vulnerable.') : ($founder->quote_en ?? 'Healthcare should be timely, structured, dignified, and accessible — especially when patients are most vulnerable.') }} ❞</p>
             </div>
 
             <div class="founder-details mt-4">
-              <h4>Visionary Leadership</h4>
-              <p>Our founder's commitment to revolutionizing healthcare delivery stems from decades of clinical experience and a profound understanding of patients' needs. Through Premier Medical Housecall, this vision translates into accessible, compassionate, and professional home-based medical care that prioritizes patient dignity and convenience.</p>
+              <h4>{{ app()->getLocale() === 'bn' ? ($founder->vision_heading_bn ?? 'Visionary Leadership') : ($founder->vision_heading_en ?? 'Visionary Leadership') }}</h4>
+              <p>{{ app()->getLocale() === 'bn' ? ($founder->vision_description_bn ?? 'Our founder\'s commitment to revolutionizing healthcare delivery stems from decades of clinical experience and a profound understanding of patients\' needs. Through Premier Medical Housecall, this vision translates into accessible, compassionate, and professional home-based medical care that prioritizes patient dignity and convenience.') : ($founder->vision_description_en ?? 'Our founder\'s commitment to revolutionizing healthcare delivery stems from decades of clinical experience and a profound understanding of patients\' needs. Through Premier Medical Housecall, this vision translates into accessible, compassionate, and professional home-based medical care that prioritizes patient dignity and convenience.') }}</p>
 
               <div class="founder-highlights mt-4">
                 <div class="highlight-item">
@@ -1847,8 +1685,8 @@
                     <i class="bi bi-check-circle-fill"></i>
                   </div>
                   <div class="highlight-content">
-                    <h5>25+ Years Medical Experience</h5>
-                    <p>Pioneering innovations in home healthcare delivery</p>
+                    <h5>{{ app()->getLocale() === 'bn' ? ($founder->highlight_1_title_bn ?? '25+ Years Medical Experience') : ($founder->highlight_1_title_en ?? '25+ Years Medical Experience') }}</h5>
+                    <p>{{ app()->getLocale() === 'bn' ? ($founder->highlight_1_description_bn ?? 'Pioneering innovations in home healthcare delivery') : ($founder->highlight_1_description_en ?? 'Pioneering innovations in home healthcare delivery') }}</p>
                   </div>
                 </div>
 
@@ -1857,8 +1695,8 @@
                     <i class="bi bi-check-circle-fill"></i>
                   </div>
                   <div class="highlight-content">
-                    <h5>Patient-Centric Philosophy</h5>
-                    <p>Dedicated to making healthcare accessible and dignified</p>
+                    <h5>{{ app()->getLocale() === 'bn' ? ($founder->highlight_2_title_bn ?? 'Patient-Centric Philosophy') : ($founder->highlight_2_title_en ?? 'Patient-Centric Philosophy') }}</h5>
+                    <p>{{ app()->getLocale() === 'bn' ? ($founder->highlight_2_description_bn ?? 'Dedicated to making healthcare accessible and dignified') : ($founder->highlight_2_description_en ?? 'Dedicated to making healthcare accessible and dignified') }}</p>
                   </div>
                 </div>
 
@@ -1867,8 +1705,8 @@
                     <i class="bi bi-check-circle-fill"></i>
                   </div>
                   <div class="highlight-content">
-                    <h5>Trusted by Thousands</h5>
-                    <p>Leading the transformation in home-based medical care</p>
+                    <h5>{{ app()->getLocale() === 'bn' ? ($founder->highlight_3_title_bn ?? 'Trusted by Thousands') : ($founder->highlight_3_title_en ?? 'Trusted by Thousands') }}</h5>
+                    <p>{{ app()->getLocale() === 'bn' ? ($founder->highlight_3_description_bn ?? 'Leading the transformation in home-based medical care') : ($founder->highlight_3_description_en ?? 'Leading the transformation in home-based medical care') }}</p>
                   </div>
                 </div>
               </div>
@@ -1877,9 +1715,13 @@
 
           <div class="col-lg-6" data-aos="fade-left" data-aos-delay="300">
             <div class="founder-image-box">
-              <img src="{{ asset('frontend/assets/img/health/staff-2.webp') }}" alt="Founder Portrait" class="img-fluid">
+              @if ($founder && $founder->picture && Storage::disk('public')->exists('founders/' . $founder->picture))
+                <img src="{{ asset('storage/founders/' . $founder->picture) }}" alt="Founder Portrait" class="img-fluid">
+              @else
+                <img src="{{ asset('frontend/assets/img/health/staff-2.webp') }}" alt="Founder Portrait" class="img-fluid">
+              @endif
               <div class="founder-badge">
-                <span class="badge-label">Founder & CEO</span>
+                <span class="badge-label">{{ app()->getLocale() === 'bn' ? ($founder->badge_label_bn ?? 'Founder & CEO') : ($founder->badge_label_en ?? 'Founder & CEO') }}</span>
               </div>
             </div>
           </div>
@@ -2058,7 +1900,8 @@
         }
       </style>
 
-    </section><!-- /About the Founder Section -->
+    </section>
+    <!-- /About the Founder Section -->
 
     <!-- Contact Section -->
     <section id="contact-preview" class="contact-preview section">
@@ -2067,12 +1910,24 @@
           <div class="col-lg-6" data-aos="fade-right" data-aos-delay="200">
             <div class="contact-info-wrapper">
               <div class="section-badge mb-3">
-                <span class="badge-text">Get in Touch</span>
+                <span class="badge-text">{{ app()->getLocale() === 'bn' ? ($getInTouch->badge_bn ?? 'Quick Connect') : ($getInTouch->badge_en ?? 'Quick Connect') }}</span>
               </div>
-              <h2 class="section-heading">Ready to Experience Better Healthcare?</h2>
-              <p>Don't wait in hospital queues. Let us bring the care you need to your front door.</p>
+              <h2 class="section-heading">{{ app()->getLocale() === 'bn' ? ($getInTouch->heading_bn ?? 'Ready to Experience Better Healthcare?') : ($getInTouch->heading_en ?? 'Ready to Experience Better Healthcare?') }}</h2>
+              <p>{{ app()->getLocale() === 'bn' ? ($getInTouch->description_bn ?? 'Don\'t wait in hospital queues. Let us bring the care you need to your front door.') : ($getInTouch->description_en ?? 'Don\'t wait in hospital queues. Let us bring the care you need to your front door.') }}</p>
               <div class="contact-details">
 
+                @if($getInTouch && ($getInTouch->contact_1_title_en || $getInTouch->contact_1_title_bn))
+                <div class="detail-item" data-aos="fade-up" data-aos-delay="300">
+                  <div class="detail-icon">
+                    <i class="bi bi-telephone"></i>
+                  </div>
+                  <div class="detail-content">
+                    <h5>{{ app()->getLocale() === 'bn' ? ($getInTouch->contact_1_title_bn ?? $getInTouch->contact_1_title_en) : $getInTouch->contact_1_title_en }}</h5>
+                    <a href="tel:{{ str_replace(' ', '', $getInTouch->contact_1_value_en) }}">{{ app()->getLocale() === 'bn' ? ($getInTouch->contact_1_value_bn ?? $getInTouch->contact_1_value_en) : $getInTouch->contact_1_value_en }}</a>
+                    <p>{{ app()->getLocale() === 'bn' ? ($getInTouch->contact_1_description_bn ?? $getInTouch->contact_1_description_en) : $getInTouch->contact_1_description_en }}</p>
+                  </div>
+                </div>
+                @else
                 <div class="detail-item" data-aos="fade-up" data-aos-delay="300">
                   <div class="detail-icon">
                     <i class="bi bi-telephone"></i>
@@ -2083,7 +1938,20 @@
                     <p>Available 24/7 for urgent medical needs</p>
                   </div>
                 </div>
+                @endif
 
+                @if($getInTouch && ($getInTouch->contact_2_title_en || $getInTouch->contact_2_title_bn))
+                <div class="detail-item" data-aos="fade-up" data-aos-delay="400">
+                  <div class="detail-icon">
+                    <i class="bi bi-envelope"></i>
+                  </div>
+                  <div class="detail-content">
+                    <h5>{{ app()->getLocale() === 'bn' ? ($getInTouch->contact_2_title_bn ?? $getInTouch->contact_2_title_en) : $getInTouch->contact_2_title_en }}</h5>
+                    <a href="mailto:{{ $getInTouch->contact_2_value_en }}">{{ app()->getLocale() === 'bn' ? ($getInTouch->contact_2_value_bn ?? $getInTouch->contact_2_value_en) : $getInTouch->contact_2_value_en }}</a>
+                    <p>{{ app()->getLocale() === 'bn' ? ($getInTouch->contact_2_description_bn ?? $getInTouch->contact_2_description_en) : $getInTouch->contact_2_description_en }}</p>
+                  </div>
+                </div>
+                @else
                 <div class="detail-item" data-aos="fade-up" data-aos-delay="400">
                   <div class="detail-icon">
                     <i class="bi bi-envelope"></i>
@@ -2094,7 +1962,20 @@
                     <p>Response within 2 hours on business days</p>
                   </div>
                 </div>
+                @endif
 
+                @if($getInTouch && ($getInTouch->contact_3_title_en || $getInTouch->contact_3_title_bn))
+                <div class="detail-item" data-aos="fade-up" data-aos-delay="500">
+                  <div class="detail-icon">
+                    <i class="bi bi-clock"></i>
+                  </div>
+                  <div class="detail-content">
+                    <h5>{{ app()->getLocale() === 'bn' ? ($getInTouch->contact_3_title_bn ?? $getInTouch->contact_3_title_en) : $getInTouch->contact_3_title_en }}</h5>
+                    <p>{{ app()->getLocale() === 'bn' ? ($getInTouch->contact_3_value_bn ?? $getInTouch->contact_3_value_en) : $getInTouch->contact_3_value_en }}</p>
+                    <p>{{ app()->getLocale() === 'bn' ? ($getInTouch->contact_3_description_bn ?? $getInTouch->contact_3_description_en) : $getInTouch->contact_3_description_en }}</p>
+                  </div>
+                </div>
+                @else
                 <div class="detail-item" data-aos="fade-up" data-aos-delay="500">
                   <div class="detail-icon">
                     <i class="bi bi-clock"></i>
@@ -2105,49 +1986,142 @@
                     <p>Business Hours: Mon-Fri 8AM-6PM</p>
                   </div>
                 </div>
+                @endif
 
               </div>
 
-              <div class="contact-cta mt-4">
-                <a href="{{ route('contact', ['lang' => getCurrentLanguage()]) }}" class="btn btn-primary btn-lg">
+              {{-- <div class="contact-cta mt-4">
+                <a href="{{ route('contact') }}" class="btn btn-primary btn-lg">
                   <i class="bi bi-arrow-right me-2"></i>
                   Request an Appointment
                 </a>
-              </div>
+              </div> --}}
             </div>
           </div>
 
           <div class="col-lg-6" data-aos="fade-left" data-aos-delay="300">
             <div class="contact-form-wrapper">
               <div class="quick-form">
-                <h4>Quick Contact</h4>
-                <form>
-                  <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="Your Name" required>
+                <h4>{{ app()->getLocale() === 'bn' ? $getInTouch->badge_bn : $getInTouch->badge_en }}</h4>
+
+                {{-- Error Messages --}}
+                @if($errors->any())
+                  <div class="alert alert-danger alert-dismissible fade show mb-3" role="alert">
+                    <strong>Please fix the following errors:</strong>
+                    <ul class="mb-0 mt-2">
+                      @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                      @endforeach
+                    </ul>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                   </div>
-                  <div class="mb-3">
-                    <input type="email" class="form-control" placeholder="Email Address" required>
+                @endif
+
+                {{-- Success Message --}}
+                @if(session('success'))
+                  <div class="alert alert-success alert-dismissible fade show mb-3" role="alert">
+                    {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                   </div>
-                  <div class="mb-3">
-                    <input type="tel" class="form-control" placeholder="Phone Number" required>
+                @endif
+
+                <form method="POST" action="{{ route('service-request.store') }}" id="serviceRequestForm">
+                  @csrf
+
+                  {{-- Loading Indicator --}}
+                  <div id="loadingIndicator" class="d-none mb-3">
+                    <div class="alert alert-info alert-dismissible fade show" role="alert">
+                      <div class="d-flex align-items-center">
+                        <div class="spinner-border spinner-border-sm text-info me-3" role="status">
+                          <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <div>
+                          <strong>Processing Your Request...</strong>
+                          <p class="mb-0 small mt-1">Sending confirmation emails and saving your request. Please wait...</p>
+                        </div>
+                      </div>
+                    </div>
                   </div>
+
                   <div class="mb-3">
-                    <select class="form-select" required>
+                    <input type="text"
+                           name="name"
+                           class="form-control @error('name') is-invalid @enderror"
+                           placeholder="Your Name"
+                           value="{{ old('name') }}"
+                           id="formName">
+                    @error('name')
+                      <div class="invalid-feedback d-block">{{ $message }}</div>
+                    @enderror
+                  </div>
+
+                  <div class="mb-3">
+                    <input type="email"
+                           name="email"
+                           class="form-control @error('email') is-invalid @enderror"
+                           placeholder="Email Address"
+                           value="{{ old('email') }}"
+                           id="formEmail">
+                    @error('email')
+                      <div class="invalid-feedback d-block">{{ $message }}</div>
+                    @enderror
+                  </div>
+
+                  <div class="mb-3">
+                    <input type="tel"
+                           name="phone"
+                           class="form-control @error('phone') is-invalid @enderror"
+                           placeholder="Phone Number"
+                           value="{{ old('phone') }}"
+                           id="formPhone">
+                    @error('phone')
+                      <div class="invalid-feedback d-block">{{ $message }}</div>
+                    @enderror
+                  </div>
+
+                  <div class="mb-3">
+                    <select name="service"
+                            class="form-select @error('service') is-invalid @enderror"
+                            id="formService">
                       <option value="">Select Service</option>
-                      <option value="checkup">General Check-up</option>
-                      <option value="vaccination">Vaccination</option>
-                      <option value="emergency">Emergency Care</option>
-                      <option value="followup">Follow-up Consultation</option>
+                      <option value="checkup" {{ old('service') === 'checkup' ? 'selected' : '' }}>General Check-up</option>
+                      <option value="vaccination" {{ old('service') === 'vaccination' ? 'selected' : '' }}>Vaccination</option>
+                      <option value="emergency" {{ old('service') === 'emergency' ? 'selected' : '' }}>Emergency Care</option>
+                      <option value="followup" {{ old('service') === 'followup' ? 'selected' : '' }}>Follow-up Consultation</option>
                     </select>
+                    @error('service')
+                      <div class="invalid-feedback d-block">{{ $message }}</div>
+                    @enderror
                   </div>
+
                   <div class="mb-3">
-                    <textarea class="form-control" rows="3" placeholder="Your Message"></textarea>
+                    <textarea name="message"
+                              class="form-control @error('message') is-invalid @enderror"
+                              rows="3"
+                              placeholder="Your Message"
+                              id="formMessage">{{ old('message') }}</textarea>
+                    @error('message')
+                      <div class="invalid-feedback d-block">{{ $message }}</div>
+                    @enderror
                   </div>
-                  <button type="submit" class="btn btn-primary w-100">
+
+                  <button type="submit" class="btn btn-primary w-100" id="submitBtn">
                     <i class="bi bi-send me-2"></i>
                     Send Request
                   </button>
                 </form>
+
+                <script>
+                  document.getElementById('serviceRequestForm').addEventListener('submit', function(e) {
+                    // Show loading indicator
+                    document.getElementById('loadingIndicator').classList.remove('d-none');
+
+                    // Disable submit button and show spinner
+                    const submitBtn = document.getElementById('submitBtn');
+                    submitBtn.disabled = true;
+                    submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Sending...';
+                  });
+                </script>
               </div>
             </div>
           </div>
@@ -2281,64 +2255,99 @@
         }
       </style>
 
-    </section><!-- /Contact Section -->
+    </section>
+    <!-- /Contact Section -->
 
     <!-- Coverage Area Section -->
     <section id="coverage-area" class="coverage-area section">
       <div class="container">
         <div class="section-title text-center mb-5" data-aos="fade-up" data-aos-delay="100">
-          <h2>Coverage Area</h2>
-          {{-- <p>Service Coverage</p>
-          <div class="section-subtitle mt-3">
-            <p>PMH provides services in central areas of Khulna</p>
-          </div> --}}
+          <h2>{{ app()->getLocale() === 'bn' ? 'কভারেজ এরিয়া' : 'Coverage Areas' }}</h2>
+          <p>{{ app()->getLocale() === 'bn' ? 'আমরা যেখানে সেবা প্রদান করি' : 'Where We Serve' }}</p>
         </div>
 
         <div class="row justify-content-center">
           <div class="col-lg-8">
-            <div class="coverage-grid" data-aos="fade-up" data-aos-delay="200">
-              <div class="coverage-item">
-                <div class="coverage-icon">
-                  <i class="bi bi-geo-alt-fill"></i>
-                </div>
-                <div class="coverage-name">Sonadanga</div>
+            @if($coverageAreas && $coverageAreas->count() > 0)
+              <div class="coverage-grid" data-aos="fade-up" data-aos-delay="200">
+                @php
+                  $aosDelay = 200;
+                @endphp
+                @foreach($coverageAreas as $area)
+                  <div class="coverage-item" data-aos="fade-up" data-aos-delay="{{ $aosDelay }}">
+                    <div class="coverage-icon">
+                      <i class="bi bi-geo-alt-fill"></i>
+                    </div>
+                    <div class="coverage-content">
+                      <div class="coverage-name">{{ app()->getLocale() === 'bn' ? ($area->title_bn ?? $area->title_en) : $area->title_en }}</div>
+                      @if($area->description_en || $area->description_bn)
+                        <p class="coverage-description">{{ app()->getLocale() === 'bn' ? ($area->description_bn ?? $area->description_en) : ($area->description_en ?? $area->description_bn) }}</p>
+                      @endif
+                    </div>
+                  </div>
+                  @php
+                    $aosDelay += 100;
+                  @endphp
+                @endforeach
               </div>
+            @else
+              <!-- Fallback: Hardcoded Coverage Areas -->
+              <div class="coverage-grid" data-aos="fade-up" data-aos-delay="200">
+                <div class="coverage-item">
+                  <div class="coverage-icon">
+                    <i class="bi bi-geo-alt-fill"></i>
+                  </div>
+                  <div class="coverage-content">
+                    <div class="coverage-name">Sonadanga</div>
+                  </div>
+                </div>
 
-              <div class="coverage-item">
-                <div class="coverage-icon">
-                  <i class="bi bi-geo-alt-fill"></i>
+                <div class="coverage-item">
+                  <div class="coverage-icon">
+                    <i class="bi bi-geo-alt-fill"></i>
+                  </div>
+                  <div class="coverage-content">
+                    <div class="coverage-name">Khalishpur</div>
+                  </div>
                 </div>
-                <div class="coverage-name">Khalishpur</div>
-              </div>
 
-              <div class="coverage-item">
-                <div class="coverage-icon">
-                  <i class="bi bi-geo-alt-fill"></i>
+                <div class="coverage-item">
+                  <div class="coverage-icon">
+                    <i class="bi bi-geo-alt-fill"></i>
+                  </div>
+                  <div class="coverage-content">
+                    <div class="coverage-name">Daulatpur</div>
+                  </div>
                 </div>
-                <div class="coverage-name">Daulatpur</div>
-              </div>
 
-              <div class="coverage-item">
-                <div class="coverage-icon">
-                  <i class="bi bi-geo-alt-fill"></i>
+                <div class="coverage-item">
+                  <div class="coverage-icon">
+                    <i class="bi bi-geo-alt-fill"></i>
+                  </div>
+                  <div class="coverage-content">
+                    <div class="coverage-name">Khulna Sadar</div>
+                  </div>
                 </div>
-                <div class="coverage-name">Khulna Sadar</div>
-              </div>
 
-              <div class="coverage-item">
-                <div class="coverage-icon">
-                  <i class="bi bi-geo-alt-fill"></i>
+                <div class="coverage-item">
+                  <div class="coverage-icon">
+                    <i class="bi bi-geo-alt-fill"></i>
+                  </div>
+                  <div class="coverage-content">
+                    <div class="coverage-name">Boyra</div>
+                  </div>
                 </div>
-                <div class="coverage-name">Boyra</div>
-              </div>
 
-              <div class="coverage-item">
-                <div class="coverage-icon">
-                  <i class="bi bi-geo-alt-fill"></i>
+                <div class="coverage-item">
+                  <div class="coverage-icon">
+                    <i class="bi bi-geo-alt-fill"></i>
+                  </div>
+                  <div class="coverage-content">
+                    <div class="coverage-name">Rupsha</div>
+                  </div>
                 </div>
-                <div class="coverage-name">Rupsha</div>
               </div>
-            </div>
+            @endif
           </div>
         </div>
       </div>
@@ -2396,6 +2405,10 @@
           border-top-color: #0084d6;
         }
 
+        .coverage-content {
+          width: 100%;
+        }
+
         .coverage-icon {
           width: 50px;
           height: 50px;
@@ -2420,6 +2433,19 @@
           font-weight: 600;
           color: #1a1a1a;
           letter-spacing: 0.3px;
+          margin-bottom: 0.5rem;
+        }
+
+        .coverage-description {
+          font-size: 0.85rem;
+          color: #666;
+          margin: 0;
+          line-height: 1.5;
+          display: none;
+        }
+
+        .coverage-item:hover .coverage-description {
+          display: block;
         }
 
         @media (max-width: 768px) {
@@ -2460,14 +2486,15 @@
         }
       </style>
 
-    </section><!-- /Coverage Area Section -->
+    </section>
+    <!-- /Coverage Area Section -->
 
     <!-- Pricing Section -->
     <section id="pricing" class="pricing section light-background">
       <div class="container">
         <div class="section-title text-center mb-5" data-aos="fade-up" data-aos-delay="100">
-          <h2>Pricing</h2>
-          <p>Affordable Healthcare at Your Doorstep</p>
+          <h2>{{ app()->getLocale() === 'bn' ? ($pricing->title_bn ?? 'মূল্য নির্ধারণ') : ($pricing->title_en ?? 'Pricing') }}</h2>
+          <p>{{ app()->getLocale() === 'bn' ? ($pricing->description_bn ?? 'আপনার দোরগোড়ায় সাশ্রয়ী স্বাস্থ্যসেবা') : ($pricing->description_en ?? 'Affordable Healthcare at Your Doorstep') }}</p>
         </div>
 
         <div class="row justify-content-center">
@@ -2475,43 +2502,60 @@
             <div class="pricing-card" data-aos="fade-up" data-aos-delay="200">
               <div class="pricing-header">
                 <div class="price-amount">
-                  <span class="currency">৳</span>
-                  <span class="amount">5,000</span>
+                  <span class="currency">{{ $pricing->currency ?? '৳' }}</span>
+                  <span class="amount">{{ number_format($pricing->price ?? 5000, 0) }}</span>
                 </div>
-                <p class="price-label">Per Visit</p>
-                <p class="price-subtitle">Starting from</p>
+                <p class="price-label">{{ app()->getLocale() === 'bn' ? ($pricing->price_label_bn ?? 'প্রতি পরিদর্শন') : ($pricing->price_label_en ?? 'Per Visit') }}</p>
+                <p class="price-subtitle">{{ app()->getLocale() === 'bn' ? ($pricing->price_subtitle_bn ?? 'শুরু থেকে') : ($pricing->price_subtitle_en ?? 'Starting from') }}</p>
               </div>
 
               <div class="pricing-features">
-                <h4 class="features-title">Includes:</h4>
+                <h4 class="features-title">{{ app()->getLocale() === 'bn' ? ($pricing->features_title_bn ?? 'অন্তর্ভুক্ত:') : ($pricing->features_title_en ?? 'Includes:') }}</h4>
                 <ul class="features-list">
-                  <li>
-                    <i class="bi bi-check-circle-fill"></i>
-                    <span>30-45 minute physician consultation</span>
-                  </li>
-                  <li>
-                    <i class="bi bi-check-circle-fill"></i>
-                    <span>Detailed examination</span>
-                  </li>
-                  <li>
-                    <i class="bi bi-check-circle-fill"></i>
-                    <span>Digital prescription</span>
-                  </li>
-                  <li>
-                    <i class="bi bi-check-circle-fill"></i>
-                    <span>Treatment planning</span>
-                  </li>
-                  <li>
-                    <i class="bi bi-check-circle-fill"></i>
-                    <span>Follow-up support</span>
-                  </li>
+                  @forelse([1, 2, 3, 4, 5] as $i)
+                    @php
+                      $feature_en_key = 'feature_' . $i . '_en';
+                      $feature_bn_key = 'feature_' . $i . '_bn';
+                      $featureText = app()->getLocale() === 'bn'
+                        ? ($pricing->{$feature_bn_key} ?? $pricing->{$feature_en_key})
+                        : ($pricing->{$feature_en_key} ?? $pricing->{$feature_bn_key});
+                    @endphp
+                    @if($featureText)
+                      <li>
+                        <i class="bi bi-check-circle-fill"></i>
+                        <span>{{ $featureText }}</span>
+                      </li>
+                    @endif
+                  @empty
+                    <!-- Fallback features if none stored -->
+                    <li>
+                      <i class="bi bi-check-circle-fill"></i>
+                      <span>{{ app()->getLocale() === 'bn' ? '৩০-৪৫ মিনিটের ডাক্তার পরামর্শ' : '30-45 minute physician consultation' }}</span>
+                    </li>
+                    <li>
+                      <i class="bi bi-check-circle-fill"></i>
+                      <span>{{ app()->getLocale() === 'bn' ? 'বিস্তারিত পরীক্ষা' : 'Detailed examination' }}</span>
+                    </li>
+                    <li>
+                      <i class="bi bi-check-circle-fill"></i>
+                      <span>{{ app()->getLocale() === 'bn' ? 'ডিজিটাল প্রেসক্রিপশন' : 'Digital prescription' }}</span>
+                    </li>
+                    <li>
+                      <i class="bi bi-check-circle-fill"></i>
+                      <span>{{ app()->getLocale() === 'bn' ? 'চিকিৎসা পরিকল্পনা' : 'Treatment planning' }}</span>
+                    </li>
+                    <li>
+                      <i class="bi bi-check-circle-fill"></i>
+                      <span>{{ app()->getLocale() === 'bn' ? 'ফলো-আপ সহায়তা' : 'Follow-up support' }}</span>
+                    </li>
+                  @endforelse
                 </ul>
               </div>
 
               <div class="pricing-action">
                 <a href="{{ route('contact', ['lang' => getCurrentLanguage()]) }}" class="btn btn-primary btn-lg w-100">
                   <i class="bi bi-calendar2-check me-2"></i>
-                  Book Now
+                  {{ app()->getLocale() === 'bn' ? 'এখনই বুক করুন' : 'Book Now' }}
                 </a>
               </div>
             </div>
@@ -2519,7 +2563,14 @@
         </div>
 
         <div class="pricing-note text-center mt-5" data-aos="fade-up" data-aos-delay="300">
-          <p><i class="bi bi-info-circle me-2"></i>Prices may vary based on service type and complexity. Contact us for detailed pricing information.</p>
+          <p>
+            <i class="bi bi-info-circle me-2"></i>
+            @if($pricing && ($pricing->note_en || $pricing->note_bn))
+              {{ app()->getLocale() === 'bn' ? ($pricing->note_bn ?? $pricing->note_en) : ($pricing->note_en ?? $pricing->note_bn) }}
+            @else
+              {{ app()->getLocale() === 'bn' ? 'সেবার ধরন এবং জটিলতার উপর ভিত্তি করে মূল্য পরিবর্তিত হতে পারে। বিস্তারিত মূল্য তথ্যের জন্য আমাদের সাথে যোগাযোগ করুন।' : 'Prices may vary based on service type and complexity. Contact us for detailed pricing information.' }}
+            @endif
+          </p>
         </div>
       </div>
 
@@ -2752,6 +2803,21 @@
         }
       </style>
 
-    </section><!-- /Pricing Section -->
+    </section>
+    <!-- /Pricing Section -->
+
+    <script>
+        // Smooth scroll to contact section after form submission
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.location.hash === '#contact-preview') {
+                const contactSection = document.getElementById('contact-preview');
+                if (contactSection) {
+                    setTimeout(function() {
+                        contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 100);
+                }
+            }
+        });
+    </script>
 
 @endsection

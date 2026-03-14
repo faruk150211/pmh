@@ -1,37 +1,21 @@
 @extends('frontend.layouts.master')
 
-@php
-    $lang = getCurrentLanguage();
-@endphp
+@section('title', (app()->getLocale() === 'bn' ? 'যোগাযোগ - প্রিমিয়ার মেডিকেল হাউসকল' : 'Contact - Premier Medical Housecall'))
 
-@section('title', ($lang === 'bn' ? 'যোগাযোগ - প্রিমিয়ার মেডিকেল হাউসকল' : 'Contact - Premier Medical Housecall'))
+@section('description', (app()->getLocale() === 'bn' ? 'প্রিমিয়ার মেডিকেল হাউসকলের সাথে যোগাযোগ করুন। আমরা আপনার চিকিৎসা সেবা সম্পর্কে যে কোনো প্রশ্নে সহায়তা করতে এখানে আছি।' : 'Get in touch with Premier Medical Housecall. We are here to help you with any inquiries about our medical services.'))
 
-@section('description', ($lang === 'bn' ? 'প্রিমিয়ার মেডিকেল হাউসকলের সাথে যোগাযোগ করুন। আমরা আপনার চিকিৎসা সেবা সম্পর্কে যে কোনো প্রশ্নে সহায়তা করতে এখানে আছি।' : 'Get in touch with Premier Medical Housecall. We are here to help you with any inquiries about our medical services.'))
-
-@section('keywords', ($lang === 'bn' ? 'যোগাযোগ করুন, চিকিৎসা সেবা, হাউসকল, অ্যাপয়েন্টমেন্ট, ফোন' : 'contact us, medical services, housecall, appointment, phone'))
+@section('keywords', (app()->getLocale() === 'bn' ? 'যোগাযোগ করুন, চিকিৎসা সেবা, হাউসকল, অ্যাপয়েন্টমেন্ট, ফোন' : 'contact us, medical services, housecall, appointment, phone'))
 
 @section('content')
-    <script>
-        // Get language from URL or localStorage
-        const urlParams = new URLSearchParams(window.location.search);
-        const langParam = urlParams.get('lang');
-        const savedLang = localStorage.getItem('language') || 'en';
-        const currentLang = langParam || savedLang;
-
-        // Store language preference
-        localStorage.setItem('language', currentLang);
-        document.documentElement.lang = currentLang;
-    </script>
-
     <!-- Page Title -->
     <div class="page-title">
       <div class="heading">
         <div class="container">
           <div class="row d-flex justify-content-center text-center">
             <div class="col-lg-8">
-              <h1 class="heading-title">{{ $lang === 'bn' ? 'যোগাযোগ' : 'Contact' }}</h1>
+              <h1 class="heading-title">{{ app()->getLocale() === 'bn' ? 'যোগাযোগ' : 'Contact' }}</h1>
               <p class="mb-0">
-                {{ $lang === 'bn' ? 'প্রশ্ন আছে বা একটি অ্যাপয়েন্টমেন্ট নির্ধারণ করতে হবে? আমাদের দল আপনাকে সাহায্য করতে এখানে আছে। আজই আমাদের সাথে যোগাযোগ করুন এবং আমাদের চমৎকার রোগী যত্নের প্রতিশ্রুতি অনুভব করুন।' : 'Have questions or need to schedule an appointment? Our team is here to help. Contact us today and experience our commitment to excellent patient care.' }}
+                {{ app()->getLocale() === 'bn' ? 'প্রশ্ন আছে বা একটি অ্যাপয়েন্টমেন্ট নির্ধারণ করতে হবে? আমাদের দল আপনাকে সাহায্য করতে এখানে আছে। আজই আমাদের সাথে যোগাযোগ করুন এবং আমাদের চমৎকার রোগী যত্নের প্রতিশ্রুতি অনুভব করুন।' : 'Have questions or need to schedule an appointment? Our team is here to help. Contact us today and experience our commitment to excellent patient care.' }}
               </p>
             </div>
           </div>
@@ -40,8 +24,8 @@
       <nav class="breadcrumbs">
         <div class="container">
           <ol>
-            <li><a href="{{ route('home') }}">{{ $lang === 'bn' ? 'হোম' : 'Home' }}</a></li>
-            <li class="current">{{ $lang === 'bn' ? 'যোগাযোগ' : 'Contact' }}</li>
+            <li><a href="{{ route('home') }}">{{ app()->getLocale() === 'bn' ? 'হোম' : 'Home' }}</a></li>
+            <li class="current">{{ app()->getLocale() === 'bn' ? 'যোগাযোগ' : 'Contact' }}</li>
           </ol>
         </div>
       </nav>
@@ -59,8 +43,8 @@
                   <i class="bi bi-geo-alt"></i>
                 </div>
                 <div class="info-content">
-                  <h3>{{ $lang === 'bn' ? 'আমাদের ঠিকানা' : 'Our Address' }}</h3>
-                  <p>1842 Maple Avenue, Portland, Oregon 97204</p>
+                  <h3>{{ app()->getLocale() === 'bn' ? 'আমাদের ঠিকানা' : 'Our Address' }}</h3>
+                  <p>368 Sher-E-Bangla Rd, Khulna 9100</p>
                 </div>
               </div>
 
@@ -69,9 +53,9 @@
                   <i class="bi bi-envelope"></i>
                 </div>
                 <div class="info-content">
-                  <h3>{{ $lang === 'bn' ? 'ইমেইল ঠিকানা' : 'Email Address' }}</h3>
-                  <p>info@example.com</p>
-                  <p>contact@example.com</p>
+                  <h3>{{ app()->getLocale() === 'bn' ? 'ইমেইল ঠিকানা' : 'Email Address' }}</h3>
+                  <p>info@premiermedical.com</p>
+                  <p>contact@premiermedical.com</p>
                 </div>
               </div>
 
@@ -80,9 +64,9 @@
                   <i class="bi bi-headset"></i>
                 </div>
                 <div class="info-content">
-                  <h3>{{ $lang === 'bn' ? 'কর্মের সময়' : 'Hours of Operation' }}</h3>
-                  <p>{{ $lang === 'bn' ? 'রবি-শুক্র: সকাল ৯ টা - সন্ধ্যা ৬ টা' : 'Sunday-Fri: 9 AM - 6 PM' }}</p>
-                  <p>{{ $lang === 'bn' ? 'শনি: সকাল ৯ টা - বিকেল ৪ টা' : 'Saturday: 9 AM - 4 PM' }}</p>
+                  <h3>{{ app()->getLocale() === 'bn' ? 'কর্মের সময়' : 'Hours of Operation' }}</h3>
+                  <p>{{ app()->getLocale() === 'bn' ? 'রবি-শুক্র: সকাল ৯ টা - সন্ধ্যা ৬ টা' : 'Sunday-Fri: 9 AM - 6 PM' }}</p>
+                  <p>{{ app()->getLocale() === 'bn' ? 'শনি: সকাল ৯ টা - বিকেল ৪ টা' : 'Saturday: 9 AM - 4 PM' }}</p>
                 </div>
               </div>
             </div>
@@ -90,8 +74,8 @@
 
           <div class="col-lg-7">
             <div class="contact-form-card" data-aos="fade-up" data-aos-delay="200">
-              <h2>{{ $lang === 'bn' ? 'আমাদের কাছে বার্তা পাঠান' : 'Send us a Message' }}</h2>
-              <p class="mb-4">{{ $lang === 'bn' ? 'প্রশ্ন আছে বা আরও জানতে চান? আমাদের কাছে পৌঁছান এবং আমাদের দল শীঘ্রই আপনার সাথে যোগাযোগ করবে।' : 'Have questions or want to learn more? Reach out to us and our team will get back to you shortly.' }}</p>
+              <h2>{{ app()->getLocale() === 'bn' ? 'আমাদের কাছে বার্তা পাঠান' : 'Send us a Message' }}</h2>
+              <p class="mb-4">{{ app()->getLocale() === 'bn' ? 'প্রশ্ন আছে বা আরও জানতে চান? আমাদের কাছে পৌঁছান এবং আমাদের দল শীঘ্রই আপনার সাথে যোগাযোগ করবে।' : 'Have questions or want to learn more? Reach out to us and our team will get back to you shortly.' }}</p>
 
               <!-- Success Message -->
               @if (session('success'))
@@ -115,12 +99,12 @@
                   <!-- Name Field -->
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label for="name" class="form-label">{{ $lang === 'bn' ? 'নাম' : 'Name' }} <span class="text-danger">*</span></label>
+                      <label for="name" class="form-label">{{ app()->getLocale() === 'bn' ? 'নাম' : 'Name' }} <span class="text-danger">*</span></label>
                       <input type="text"
                              class="form-control @error('name') is-invalid @enderror"
                              name="name"
                              id="name"
-                             placeholder="{{ $lang === 'bn' ? 'আপনার সম্পূর্ণ নাম' : 'Your Full Name' }}"
+                             placeholder="{{ app()->getLocale() === 'bn' ? 'আপনার সম্পূর্ণ নাম' : 'Your Full Name' }}"
                              value="{{ old('name') }}"
                              pattern="[a-zA-Z\s\'-]+"
                              maxlength="255"
@@ -135,12 +119,12 @@
                   <!-- Email Field -->
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label for="email" class="form-label">{{ $lang === 'bn' ? 'ইমেইল' : 'Email' }} <span class="text-danger">*</span></label>
+                      <label for="email" class="form-label">{{ app()->getLocale() === 'bn' ? 'ইমেইল' : 'Email' }} <span class="text-danger">*</span></label>
                       <input type="email"
                              class="form-control @error('email') is-invalid @enderror"
                              name="email"
                              id="email"
-                             placeholder="{{ $lang === 'bn' ? 'আপনার@ইমেইল.কম' : 'your@email.com' }}"
+                             placeholder="{{ app()->getLocale() === 'bn' ? 'আপনার@ইমেইল.কম' : 'your@email.com' }}"
                              value="{{ old('email') }}"
                              maxlength="255"
                              required>
@@ -154,7 +138,7 @@
                   <!-- Phone Field -->
                   <div class="col-12">
                     <div class="form-group">
-                      <label for="phone" class="form-label">{{ $lang === 'bn' ? 'ফোন' : 'Phone' }} <span class="text-muted">({{ $lang === 'bn' ? 'ঐচ্ছিক' : 'Optional' }})</span></label>
+                      <label for="phone" class="form-label">{{ app()->getLocale() === 'bn' ? 'ফোন' : 'Phone' }} <span class="text-muted">({{ app()->getLocale() === 'bn' ? 'ঐচ্ছিক' : 'Optional' }})</span></label>
                       <input type="tel"
                              class="form-control @error('phone') is-invalid @enderror"
                              name="phone"
@@ -173,14 +157,14 @@
                   <div class="col-12">
                     <div class="form-group">
                       <label for="subject" class="form-label">
-                        {{ $lang === 'bn' ? 'বিষয়' : 'Subject' }} <span class="text-danger">*</span>
+                        {{ app()->getLocale() === 'bn' ? 'বিষয়' : 'Subject' }} <span class="text-danger">*</span>
                         <small class="text-muted">(<span id="subjectCount">0</span>/255)</small>
                       </label>
                       <input type="text"
                              class="form-control @error('subject') is-invalid @enderror"
                              name="subject"
                              id="subject"
-                             placeholder="{{ $lang === 'bn' ? 'এটি কি সম্পর্কে?' : 'What is this about?' }}"
+                             placeholder="{{ app()->getLocale() === 'bn' ? 'এটি কি সম্পর্কে?' : 'What is this about?' }}"
                              value="{{ old('subject') }}"
                              maxlength="255"
                              minlength="5"
@@ -196,13 +180,13 @@
                   <div class="col-12">
                     <div class="form-group">
                       <label for="message" class="form-label">
-                        {{ $lang === 'bn' ? 'বার্তা' : 'Message' }} <span class="text-danger">*</span>
+                        {{ app()->getLocale() === 'bn' ? 'বার্তা' : 'Message' }} <span class="text-danger">*</span>
                         <small class="text-muted">(<span id="messageCount">0</span>/5000)</small>
                       </label>
                       <textarea class="form-control @error('message') is-invalid @enderror"
                                 name="message"
                                 id="message"
-                                placeholder="{{ $lang === 'bn' ? 'আপনার বার্তা এখানে...' : 'Your message here...' }}"
+                                placeholder="{{ app()->getLocale() === 'bn' ? 'আপনার বার্তা এখানে...' : 'Your message here...' }}"
                                 rows="6"
                                 minlength="10"
                                 maxlength="5000"
@@ -218,14 +202,14 @@
                   <div class="col-12">
                     <div class="loading d-none" id="loadingSpinner">
                       <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                      {{ $lang === 'bn' ? 'আপনার বার্তা পাঠানো হচ্ছে...' : 'Sending your message...' }}
+                      {{ app()->getLocale() === 'bn' ? 'আপনার বার্তা পাঠানো হচ্ছে...' : 'Sending your message...' }}
                     </div>
                   </div>
 
                   <!-- Submit Button -->
                   <div class="col-12">
                     <button type="submit" class="btn btn-submit" id="submitBtn">
-                      <span id="submitText">{{ $lang === 'bn' ? 'বার্তা পাঠান' : 'Send Message' }}</span>
+                      <span id="submitText">{{ app()->getLocale() === 'bn' ? 'বার্তা পাঠান' : 'Send Message' }}</span>
                     </button>
                   </div>
                 </div>

@@ -76,7 +76,7 @@
                             </td>
                             <td>{{ $setting->description }}</td>
                             <td>
-                                <span class="badge badge-info">{{ ucfirst($setting->type) }}</span>
+                                <span>{{ ucfirst($setting->type) }}</span>
                             </td>
                             <td>
                                 <a href="{{ route('admin.settings.edit', $setting->id) }}" class="btn btn-sm btn-warning">
