@@ -78,8 +78,11 @@ class ServiceRequestController extends Controller
                     new \App\Mail\ServiceRequestConfirmation($serviceRequest)
                 );
                 \Log::info('Service Request: Customer confirmation email sent successfully');
+                $this->logEmail($serviceRequest->id, $serviceRequest->email, 'Service Request Confirmation', 'confirmation', 'sent');
             } catch (\Exception $mailError) {
-                \Log::error('Service request confirmation email failed: ' . $mailError->getMessage(), ['exception' => $mailError]);
+                $errorMsg = $mailError->getMessage();
+                \Log::error('Service request confirmation email failed: ' . $errorMsg, ['exception' => $mailError]);
+                $this->logEmail($serviceRequest->id, $serviceRequest->email, 'Service Request Confirmation', 'confirmation', 'failed', $errorMsg);
             }
 
             // Send notification email to admin
@@ -90,8 +93,11 @@ class ServiceRequestController extends Controller
                     new \App\Mail\ServiceRequestNotification($serviceRequest)
                 );
                 \Log::info('Service Request: Admin notification email sent successfully');
+                $this->logEmail($serviceRequest->id, $adminEmail, 'New Service Request Notification', 'notification', 'sent');
             } catch (\Exception $mailError) {
-                \Log::error('Service request admin notification failed: ' . $mailError->getMessage(), ['exception' => $mailError]);
+                $errorMsg = $mailError->getMessage();
+                \Log::error('Service request admin notification failed: ' . $errorMsg, ['exception' => $mailError]);
+                $this->logEmail($serviceRequest->id, $adminEmail, 'New Service Request Notification', 'notification', 'failed', $errorMsg);
             }
 
             return redirect()->to(url('/') . '#contact-preview')->with('success', 'Thank you! Your service request has been submitted successfully. We will contact you shortly to confirm your appointment.');
@@ -156,6 +162,31 @@ class ServiceRequestController extends Controller
         ]);
 
         return back()->with('success', 'Notes added successfully.');
+    }
+
+    /**
+     * Log email attempts to database for tracking
+     */
+    private function logEmail($serviceRequestId, $recipient, $subject, $emailType, $status, $errorMessage = null)
+    {
+        try {
+            // Only log if email_logs table exists
+            if (\Schema::hasTable('email_logs')) {
+                \DB::table('email_logs')->insert([
+                    'service_request_id' => $serviceRequestId,
+                    'recipient' => $recipient,
+                    'subject' => $subject,
+                    'email_type' => $emailType,
+                    'status' => $status,
+                    'error_message' => $errorMessage,
+                    'sent_at' => $status === 'sent' ? now() : null,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            }
+        } catch (\Exception $e) {
+            \Log::warning('Failed to log email: ' . $e->getMessage());
+        }
     }
 
     /**
