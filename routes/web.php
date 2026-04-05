@@ -24,7 +24,9 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/', function () {
+    return view('frontend.under-construction');
+})->name('home');
 Route::get('/who-we-are', [HomeController::class, 'whoWeAre'])->name('who-we-are');
 Route::get('/services', [HomeController::class, 'services'])->name('services');
 Route::get('/services/{slug}', [HomeController::class, 'serviceDetails'])->name('service-details');
